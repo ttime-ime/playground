@@ -4,8 +4,7 @@ Browser tools for testing the T-Time Tibetan input engine, which runs here as
 WebAssembly built from the private `ttime` repository. All transliteration rules
 live in Rust; the JavaScript only handles events and presentation.
 
-**Licence: not yet chosen.** Until a LICENSE file is added this repository is
-all-rights-reserved. See `NOTICE` for third-party attributions.
+**Licence:** code under `MIT OR Apache-2.0` (`LICENSE-MIT`, `LICENSE-APACHE`), at your option. Third-party attributions are in `NOTICE`. The built `pkg/` contains the T-Time engine compiled from the `ttime` repository under the same licence. No artwork is included here.
 
 ## Two things are tested, separately
 
