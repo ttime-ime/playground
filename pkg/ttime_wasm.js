@@ -57,6 +57,13 @@ export class Session {
         }
     }
     /**
+     * @returns {boolean}
+     */
+    diplomatic() {
+        const ret = wasm.session_diplomatic(this.__wbg_ptr);
+        return ret !== 0;
+    }
+    /**
      * Commits whatever is provisional and returns the whole text.
      * @returns {string}
      */
@@ -83,9 +90,10 @@ export class Session {
     }
     /**
      * @param {boolean} precomposed
+     * @param {boolean | null} [diplomatic]
      */
-    constructor(precomposed) {
-        const ret = wasm.session_new(precomposed);
+    constructor(precomposed, diplomatic) {
+        const ret = wasm.session_new(precomposed, isLikeNone(diplomatic) ? 0xFFFFFF : diplomatic ? 1 : 0);
         this.__wbg_ptr = ret;
         SessionFinalization.register(this, this.__wbg_ptr, this);
         return this;
@@ -163,6 +171,31 @@ export function convert_json(input, precomposed) {
         return getStringFromWasm0(ret[0], ret[1]);
     } finally {
         wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+
+/**
+ * Like `convert_json`; in diplomatic mode every choice or ignored input is a
+ * Warning. The text is the same in both modes.
+ * @param {string} input
+ * @param {boolean} precomposed
+ * @param {boolean} diplomatic
+ * @returns {string}
+ */
+export function convert_json_with(input, precomposed, diplomatic) {
+    let deferred4_0;
+    let deferred4_1;
+    try {
+        const val2 = +precomposed;
+        const val3 = +diplomatic;
+        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.convert_json_with(ptr0, len0, val2, val3);
+        deferred4_0 = ret[0];
+        deferred4_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred4_0, deferred4_1, 1);
     }
 }
 
@@ -276,6 +309,10 @@ function getUint8ArrayMemory0() {
         cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
     }
     return cachedUint8ArrayMemory0;
+}
+
+function isLikeNone(x) {
+    return x === undefined || x === null;
 }
 
 function passStringToWasm0(arg, malloc, realloc) {

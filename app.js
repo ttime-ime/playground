@@ -1,4 +1,4 @@
-import init, { Session, version } from "./pkg/ttime_wasm.js";
+import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js";
 import { initPalette } from "./palette.js";
 
 const $ = (id) => document.getElementById(id);
@@ -66,7 +66,20 @@ function inspect() {
   $("i-nf").textContent = editor.value === "" ? "—" : nfc ? "NFC (unchanged by normalization)" : "Not NFC: normalizing would change this text";
   const ul = $("i-diag");
   ul.textContent = "";
-  const diags = JSON.parse(session.diagnostics_json());
+  // In diplomatic mode the whole typed text is checked, so a warning is not lost
+  // when its syllable is fixed. Direct edits make the typed text unreliable.
+  const whole = session.diplomatic() && typed !== null;
+  const source = whole ? typed : session.raw();
+  const diags = whole
+    ? JSON.parse(convert_json_with(typed, session.precomposed(), true)).diagnostics
+    : JSON.parse(session.diagnostics_json());
+  $("i-diag-label").textContent = whole ? "Diagnostics (all typed text)" : "Diagnostics (highlighted run)";
+  const bytes = new TextEncoder().encode(source);
+  const quote = (d) => new TextDecoder().decode(bytes.slice(d.start, d.end));
+  const warnings = diags.filter((d) => d.severity === "Warning").length;
+  const state = $("dip-state");
+  state.hidden = !session.diplomatic();
+  state.textContent = warnings === 0 ? "Diplomatic: no warnings" : `Diplomatic: ${warnings} warning${warnings === 1 ? "" : "s"}`;
   if (diags.length === 0) {
     const li = document.createElement("li");
     li.textContent = "none";
@@ -78,7 +91,7 @@ function inspect() {
     const tag = document.createElement("span");
     tag.className = "tag";
     tag.textContent = d.severity === "Warning" ? "Warning" : "Note";
-    li.append(tag, `${d.code} (bytes ${d.start}–${d.end}): ${d.message}`);
+    li.append(tag, `${d.code} on “${quote(d)}”: ${d.message}`);
     ul.append(li);
   }
   report();
@@ -97,6 +110,7 @@ function report() {
     `Version: ${version()}`,
     `Browser: ${navigator.userAgent}`,
     `Precomposed output: ${session.precomposed()}`,
+    `Diplomatic mode: ${session.diplomatic()}`,
   ];
   if (include) {
     lines.push(`EWTS typed: ${typed === null ? "(not available: text was edited directly)" : JSON.stringify(typed)}`);
@@ -111,8 +125,8 @@ function report() {
   $("gh-issue").href = issueUrl("Writing Room: ", $("report").textContent);
 }
 
-function newSession(precomposed, keepFrom) {
-  const s = new Session(precomposed);
+function newSession(precomposed, diplomatic, keepFrom) {
+  const s = new Session(precomposed, diplomatic);
   if (keepFrom) {
     s.set_committed(keepFrom.committed());
     s.insert_text(keepFrom.raw());
@@ -192,7 +206,12 @@ function bind() {
     editor.focus();
   });
   $("precomposed").addEventListener("change", (e) => {
-    session = newSession(e.target.checked, session);
+    session = newSession(e.target.checked, session.diplomatic(), session);
+    render();
+  });
+  $("diplomatic").addEventListener("change", (e) => {
+    session = newSession(session.precomposed(), e.target.checked, session);
+    setStatus(e.target.checked ? "Diplomatic mode on: text is unchanged, choices are reported" : "Diplomatic mode off");
     render();
   });
   $("ewts-on").addEventListener("change", (e) => {
@@ -256,7 +275,7 @@ function buildExamples() {
 
 await init();
 $("build").textContent = version();
-session = new Session(false);
+session = new Session(false, false);
 buildExamples();
 bind();
 initPalette({

@@ -37,6 +37,8 @@
     <h2 id="ed-h" class="visually-hidden">Editor</h2>
     <div class="toolbar">
       <label class="check"><input type="checkbox" id="ewts-on" checked> EWTS typing</label>
+      <label class="check" title="Same text, but every choice or ignored letter is reported as a warning"><input type="checkbox" id="diplomatic"> Diplomatic</label>
+      <span id="dip-state" class="badge" hidden role="status"></span>
       <label class="label field" for="font">Font
         <select id="font">
           <option value="auto">Noto Serif Tibetan</option>
@@ -82,7 +84,7 @@
         <dt>Fixed Unicode</dt><dd><span id="i-comm" lang="bo"></span></dd>
         <dt>All text: code points</dt><dd><code id="i-cp"></code></dd>
         <dt>Normalization</dt><dd id="i-nf"></dd>
-        <dt>Diagnostics (highlighted run)</dt><dd><ul class="diag" id="i-diag"></ul></dd>
+        <dt id="i-diag-label">Diagnostics (highlighted run)</dt><dd><ul class="diag" id="i-diag"></ul></dd>
       </dl>
     </div>
   </details>
