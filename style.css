@@ -110,7 +110,7 @@ main.wrap { padding-bottom: var(--s7); }
   gap: var(--s3) var(--s5); padding-top: var(--s4); padding-bottom: var(--s4);
 }
 .brand { display: flex; align-items: center; gap: var(--s3); text-decoration: none; }
-.brand img { display: block; height: 38px; width: auto; }
+.brand img { display: block; height: 48px; width: auto; }
 .badge {
   font: 600 0.6875rem/1 var(--sans); letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px;
@@ -258,7 +258,7 @@ table.data td.num { font-variant-numeric: tabular-nums; }
   dl.facts { grid-template-columns: 1fr; gap: 0; }
   dl.facts dt { margin-top: var(--s3); }
   .nav { gap: var(--s4); }
-  .brand img { height: 32px; }
+  .brand img { height: 40px; }
 }
 @media (max-width: 420px) {
   button, select { min-height: 44px; }
