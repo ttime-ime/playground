@@ -18,5 +18,7 @@ honestly; "unverified" means not yet checked.
   text copied. Stack inventory agreement was checked by behaviour, not by copying.
 - Botok, Tibetan NLP, TiSpell, OpenPecha, BDRC: unverified; unused.
 
+- Newsreader (SIL OFL 1.1, Production Type) and Noto Serif Tibetan (SIL OFL 1.1, Google/Adobe): bundled as woff2 in playground/assets/fonts with their licence texts. Converted from the upstream files, not modified in design.
+
 T-Time's own code is licensed under MIT OR Apache-2.0 (LICENSE-MIT, LICENSE-APACHE).
 The artwork in design/ is not covered by that grant; see the README.

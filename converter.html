@@ -3,62 +3,121 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>T-Time Converter</title>
+<link rel="icon" href="assets/logo-square.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>T-Time <span class="sub">Converter</span></h1>
-  <nav><a href="index.html">Writing Room</a> · <a href="converter.html" aria-current="page">Converter</a> · <a href="parity.html">Parity check</a></nav>
-  <p class="build" id="build">loading…</p>
-</header>
-
-<main>
-  <p class="hint">Tests <strong>conversion correctness</strong>, not typing. Edit either box; the other updates. The Writing Room tests the typing experience; the two are different things.</p>
-  <div class="two">
-    <section>
-      <h2>EWTS</h2>
-      <textarea id="ewts" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="EWTS text"></textarea>
-    </section>
-    <section>
-      <h2>Tibetan Unicode</h2>
-      <textarea id="uni" rows="8" lang="bo" spellcheck="false" aria-label="Tibetan Unicode text" class="tib"></textarea>
-    </section>
-  </div>
-  <div class="controls">
-    <label><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
-    <button id="copy-uni">Copy Unicode</button>
-    <button id="copy-ewts">Copy EWTS</button>
-    <button id="clear">Clear</button>
-    <span id="status" role="status"></span>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="T-Time, writing room">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-long-dark.svg">
+      <img src="assets/logo-long.svg" alt="T-time" width="111" height="38">
+    </picture>
+    <span class="badge">Experimental prototype</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Writing Room</a>
+    <a href="converter.html" aria-current="page">Converter</a>
+    <a href="parity.html">Tools</a>
+  </nav>
+</div></header>
+<main class="wrap" id="main">
+  <div class="intro">
+    <h1>The Converter</h1>
+    <p class="subtitle">Two scripts, one conversation.</p>
+    <p class="lede">Write in EWTS or Tibetan Unicode. The other side follows.</p>
   </div>
 
-  <details open>
-    <summary>Result and diagnostics</summary>
-    <dl>
-      <dt>Last edited</dt><dd id="r-dir"></dd>
-      <dt>Reverse fidelity</dt><dd id="r-fid"></dd>
-      <dt>Round trip</dt><dd id="r-rt"></dd>
-      <dt>Unicode code points</dt><dd><code id="r-cp"></code></dd>
-      <dt>Normalization</dt><dd id="r-nf"></dd>
-      <dt>Diagnostics</dt><dd><ul id="r-diag"></ul></dd>
-    </dl>
-    <p class="hint">Fidelity: <strong>Exact</strong> means converting the EWTS back gives your Unicode unchanged; <strong>Canonical</strong> means equal after canonical normalization; <strong>Lossy</strong> means some characters have no EWTS spelling and appear as <code>\uXXXX</code> escapes. A round trip that differs is a finding worth reporting.</p>
+  <div class="instrument paper">
+    <section class="pane" aria-labelledby="l-ewts">
+      <div class="pane-head">
+        <label class="label" id="l-ewts" for="ewts">EWTS</label>
+        <button type="button" id="copy-ewts" class="quiet">Copy EWTS</button>
+      </div>
+      <textarea id="ewts" class="ewts" rows="4" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+    </section>
+    <section class="pane" aria-labelledby="l-uni">
+      <div class="pane-head">
+        <label class="label" id="l-uni" for="uni">Tibetan Unicode</label>
+        <button type="button" id="copy-uni" class="primary">Copy Unicode</button>
+      </div>
+      <textarea id="uni" class="tib" lang="bo" rows="4" spellcheck="false"></textarea>
+    </section>
+  </div>
+
+  <div class="convbar">
+    <label class="label" for="example">Try an example</label>
+    <select id="example">
+      <option value="">Choose…</option>
+      <optgroup label="Ordinary Tibetan">
+        <option value="bkra shis bde legs">bkra shis bde legs</option>
+        <option value="bod skad">bod skad</option>
+      </optgroup>
+      <optgroup label="Consonant stacks">
+        <option value="bsgrubs">bsgrubs</option>
+        <option value="gyon g.yon ">gyon g.yon (stack or prefix)</option>
+        <option value="sat+t+wa">sat+t+wa (explicit stack)</option>
+      </optgroup>
+      <optgroup label="Sanskrit">
+        <option value="sarba mang+galaM ">sarba mang+galaM</option>
+      </optgroup>
+      <optgroup label="Punctuation and literals">
+        <option value="khong [New York] la phebs song /">khong [New York] la phebs song /</option>
+      </optgroup>
+    </select>
+    <button type="button" id="clear" class="quiet">Clear</button>
+    <span id="status" class="status" role="status" aria-live="polite"></span>
+  </div>
+
+  <details class="paper" id="details">
+    <summary>Conversion details <span class="count" id="diag-count">no notes</span></summary>
+    <div class="disclosure-body">
+      <dl class="facts">
+        <dt>Last edited</dt><dd id="r-dir"></dd>
+        <dt>Reverse fidelity</dt><dd id="r-fid"></dd>
+        <dt>Round trip</dt><dd id="r-rt"></dd>
+        <dt>Unicode code points</dt><dd><code id="r-cp"></code></dd>
+        <dt>Normalization</dt><dd id="r-nf"></dd>
+        <dt>Diagnostics</dt><dd><ul class="diag" id="r-diag"></ul></dd>
+      </dl>
+      <p class="hint"><strong>Exact</strong>: converting the EWTS back gives your Unicode unchanged. <strong>Canonical</strong>: equal after canonical normalization. <strong>Lossy</strong>: some characters have no EWTS spelling and appear as <code>\uXXXX</code> escapes. A round trip that differs is a finding worth reporting.</p>
+    </div>
   </details>
 
-  <details id="report-box">
+  <details class="paper">
+    <summary>Advanced</summary>
+    <div class="disclosure-body">
+      <label class="check"><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
+      <p class="hint">Writes a few Tibetan letters as single precomposed characters (for example U+0F43) instead of their standard decomposed sequence. The result is not in Unicode normalization form NFC, so text compared or searched elsewhere may not match. Leave it off unless a font or program needs it.</p>
+    </div>
+  </details>
+
+  <details class="paper" id="report-box">
     <summary>Report a problem</summary>
-    <p class="hint">Nothing is sent anywhere. Review the text, then copy it into an email or note.</p>
-    <label>What you expected <textarea id="expected" rows="2"></textarea></label>
-    <label><input type="checkbox" id="include-text" checked> Include both boxes in the report</label>
-    <pre id="report" aria-label="Report preview"></pre>
-    <button id="copy-report">Copy report</button>
+    <div class="disclosure-body">
+      <p class="hint">Nothing is sent anywhere. Review the text, then copy it into an email or note.</p>
+      <label class="formrow">What you expected <textarea id="expected" rows="2"></textarea></label>
+      <label class="check"><input type="checkbox" id="include-text" checked> Include both boxes in the report</label>
+      <pre class="report" id="report" aria-label="Report preview"></pre>
+      <button type="button" id="copy-report">Copy report</button>
+    </div>
   </details>
-</main>
 
-<footer>
-  <p><strong>Experimental.</strong> Conversion runs in your browser; text is not sent to any server. The host may keep ordinary access logs. The page is public to anyone with the link.</p>
-</footer>
+  <div class="vignette"><img src="assets/typing.webp" alt="" width="1200" height="567"></div>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p><strong>Experimental prototype.</strong> Conversion runs in your browser and your text is not sent to any server. The host that serves this page may keep ordinary access logs, and the page is public to anyone with the link.</p>
+  <details>
+    <summary>Build information</summary>
+    <p class="hint">Include this in bug reports.</p>
+    <p class="build" id="build">loading…</p>
+  </details>
+  <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
+</div></footer>
 <script type="module" src="converter.js"></script>
 </body>
 </html>

@@ -3,73 +3,107 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>T-Time Writing Room</title>
+<link rel="icon" href="assets/logo-square.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>T-Time <span class="sub">An experimental Tibetan writing room</span></h1>
-  <nav><a href="index.html" aria-current="page">Writing Room</a> · <a href="converter.html">Converter</a> · <a href="parity.html">Parity check</a></nav>
-  <p class="build" id="build">loading…</p>
-</header>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="T-Time, writing room">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-long-dark.svg">
+      <img src="assets/logo-long.svg" alt="T-time" width="111" height="38">
+    </picture>
+    <span class="badge">Experimental prototype</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" aria-current="page">Writing Room</a>
+    <a href="converter.html">Converter</a>
+    <a href="parity.html">Tools</a>
+  </nav>
+</div></header>
+<main class="wrap" id="main">
+  <div class="hero">
+    <div class="intro">
+      <h1>The Writing Room</h1>
+      <p class="subtitle">A little room for Tibetan.</p>
+      <p class="lede">Type EWTS and watch Tibetan appear. Highlighted text is still settling and becomes fixed when you press space or Enter.</p>
+    </div>
+    <img src="assets/typing.webp" alt="Momo the yak and Tibby the cat-maid typing together at a table" width="1200" height="567">
+  </div>
 
-<main>
-  <section aria-labelledby="ed-h">
-    <h2 id="ed-h" class="sr">Editor</h2>
-    <p class="hint">Type EWTS (Wylie). Highlighted text is <strong>provisional</strong>: it can still change as you type, and becomes fixed when you press space or Enter.</p>
-    <textarea id="editor" lang="bo" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
-      aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
-    <div class="controls">
-      <button id="copy">Copy Unicode</button>
-      <button id="clear">Clear</button>
-      <label><input type="checkbox" id="ewts-on" checked> EWTS typing</label>
-      <label><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
-      <label>Font
+  <section class="paper" aria-labelledby="ed-h">
+    <h2 id="ed-h" class="visually-hidden">Editor</h2>
+    <div class="toolbar">
+      <label class="check"><input type="checkbox" id="ewts-on" checked> EWTS typing</label>
+      <label class="label field" for="font">Font
         <select id="font">
-          <option value="auto">System default</option>
-          <option value="noto">Noto Serif Tibetan, if installed</option>
-          <option value="jomolhari">Jomolhari, if installed</option>
-          <option value="kailasa">Kailasa (macOS)</option>
+          <option value="auto">Noto Serif Tibetan</option>
+          <option value="jomolhari">Jomolhari (if installed)</option>
+          <option value="system">System Tibetan font</option>
         </select>
       </label>
-      <span id="status" role="status"></span>
+      <div class="actions">
+        <span id="status" class="status" role="status" aria-live="polite"></span>
+        <button type="button" id="clear" class="quiet">Clear</button>
+        <button type="button" id="copy" class="primary">Copy Unicode</button>
+      </div>
     </div>
-    <p id="limits" class="limits"><strong>Limits.</strong> Typing is handled only at the end of the text. If you move the cursor into earlier text, typing there becomes ordinary browser editing (no EWTS). Backspace removes the last typed letter of the provisional run, then behaves normally. Not an IME, and no phone or dictionary features exist.</p>
+    <textarea id="editor" class="tib writing" lang="bo" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
+      aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
   </section>
+  <p id="limits" class="hint"><strong>Limits.</strong> EWTS typing works at the end of the text. If you move the cursor into earlier text, typing there is ordinary browser editing. Backspace removes the last typed letter of the highlighted run, then behaves normally. Phone keyboards that use composition may bypass EWTS typing. This is not an IME, and has no dictionary or suggestions.</p>
 
-  <section aria-labelledby="ex-h">
-    <h2 id="ex-h">Examples</h2>
-    <p class="hint">Each button replaces the text with a sample. Only the first group is ordinary; the last group shows unsettled questions that a specialist should rule on.</p>
-    <div id="examples"></div>
-  </section>
+  <h2>Examples</h2>
+  <p class="hint">Each button replaces the text with a sample. The last group shows unsettled questions that a specialist should judge.</p>
+  <div id="examples"></div>
 
-  <details id="inspector" open>
+  <details class="paper" id="inspector">
     <summary>Inspector</summary>
-    <dl>
-      <dt>Raw EWTS in the provisional run</dt><dd><code id="i-raw"></code></dd>
-      <dt>Provisional Unicode</dt><dd><code id="i-prov" lang="bo"></code></dd>
-      <dt>Committed Unicode</dt><dd><code id="i-comm" lang="bo"></code></dd>
-      <dt>All text: code points</dt><dd><code id="i-cp"></code></dd>
-      <dt>Normalization</dt><dd id="i-nf"></dd>
-      <dt>Diagnostics (provisional run)</dt><dd><ul id="i-diag"></ul></dd>
-    </dl>
+    <div class="disclosure-body">
+      <dl class="facts">
+        <dt>Raw EWTS, highlighted run</dt><dd><code id="i-raw"></code></dd>
+        <dt>Highlighted Unicode</dt><dd><span id="i-prov" lang="bo"></span></dd>
+        <dt>Fixed Unicode</dt><dd><span id="i-comm" lang="bo"></span></dd>
+        <dt>All text: code points</dt><dd><code id="i-cp"></code></dd>
+        <dt>Normalization</dt><dd id="i-nf"></dd>
+        <dt>Diagnostics (highlighted run)</dt><dd><ul class="diag" id="i-diag"></ul></dd>
+      </dl>
+    </div>
   </details>
 
-  <details id="report-box">
+  <details class="paper">
+    <summary>Advanced</summary>
+    <div class="disclosure-body">
+      <label class="check"><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
+      <p class="hint">Writes a few Tibetan letters as single precomposed characters (for example U+0F43). The result is not NFC. Text already fixed is kept as it is; only the highlighted run is re-read in the new mode.</p>
+    </div>
+  </details>
+
+  <details class="paper" id="report-box">
     <summary>Report a problem</summary>
-    <p class="hint">Nothing is sent anywhere. Fill in what you expected, review the text below, then copy it into an email or a note. It contains the text currently in the editor and nothing else.</p>
-    <label>What you expected <textarea id="expected" rows="2" placeholder="Expected Tibetan or EWTS"></textarea></label>
-    <label>Comment <textarea id="comment" rows="2"></textarea></label>
-    <label><input type="checkbox" id="include-text" checked> Include the editor text in the report</label>
-    <pre id="report" aria-label="Report preview"></pre>
-    <button id="copy-report">Copy report</button>
+    <div class="disclosure-body">
+      <p class="hint">Nothing is sent anywhere. Fill in what you expected, review the text, then copy it into an email or a note.</p>
+      <label class="formrow">What you expected <textarea id="expected" rows="2" placeholder="Expected Tibetan or EWTS"></textarea></label>
+      <label class="formrow">Comment <textarea id="comment" rows="2"></textarea></label>
+      <label class="check"><input type="checkbox" id="include-text" checked> Include the editor text in the report</label>
+      <pre class="report" id="report" aria-label="Report preview"></pre>
+      <button type="button" id="copy-report">Copy report</button>
+    </div>
   </details>
 </main>
-
-<footer>
-  <p><strong>Experimental.</strong> Conversion runs in your browser; typed text is not sent to any server. The host that serves this page may keep ordinary access logs. The page is public to anyone with the link.</p>
-  <p>Source and licence: see the project repository. Known limitations and open questions: <code>docs/review/expert-review.md</code>. <a href="parity.html">Parity check</a>.</p>
-</footer>
+<footer class="site-footer"><div class="wrap">
+  <p><strong>Experimental prototype.</strong> Conversion runs in your browser and your text is not sent to any server. The host that serves this page may keep ordinary access logs, and the page is public to anyone with the link.</p>
+  <details>
+    <summary>Build information</summary>
+    <p class="hint">Include this in bug reports.</p>
+    <p class="build" id="build">loading…</p>
+  </details>
+  <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
+</div></footer>
 <script type="module" src="app.js"></script>
 </body>
 </html>

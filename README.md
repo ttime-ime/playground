@@ -4,7 +4,7 @@ Browser tools for testing the T-Time Tibetan input engine, which runs here as
 WebAssembly built from the private `ttime` repository. All transliteration rules
 live in Rust; the JavaScript only handles events and presentation.
 
-**Licence:** code under `MIT OR Apache-2.0` (`LICENSE-MIT`, `LICENSE-APACHE`), at your option. Third-party attributions are in `NOTICE`. The built `pkg/` contains the T-Time engine compiled from the `ttime` repository under the same licence. No artwork is included here.
+**Licence:** code under `MIT OR Apache-2.0` (`LICENSE-MIT`, `LICENSE-APACHE`), at your option. Third-party attributions are in `NOTICE`. The built `pkg/` contains the T-Time engine compiled from the `ttime` repository under the same licence. Logos and the illustration in `assets/` are project artwork and are not covered by that grant (see below).
 
 ## Two things are tested, separately
 
@@ -35,13 +35,22 @@ Run locally: `python3 -m http.server 8000`, then open http://localhost:8000.
 - Backspace removes the last typed letter of the provisional run; with none, the
   browser deletes committed text.
 - Input methods that use composition events (most phone keyboards) bypass EWTS typing.
-- No fonts bundled; installed Tibetan fonts are used. No mascot images yet.
+
+## Design and assets
+
+Visual design only; the engine, fixtures and conversion behaviour are untouched.
+Colour and type tokens live at the top of `style.css`, light and dark via
+`prefers-color-scheme`. Motion respects `prefers-reduced-motion`.
+
+- `assets/logo-long.svg`, `logo-long-dark.svg`, `logo-square.svg`: supplied logos, unmodified. The `<picture>` element picks the dark variant in dark mode.
+- `assets/typing.webp`: the supplied `typing.png`, trimmed and resized, converted to WebP. Project artwork, not under the code licence.
+- `assets/fonts/`: Newsreader (roman and italic) and Noto Serif Tibetan, subset-free woff2 conversions, under the SIL OFL 1.1 (texts alongside; neither font declares a reserved name). Source Sans 3 and Jomolhari were not bundled because their reserved font names forbid modified or subset versions. Sans and mono use system stacks; Jomolhari is selectable in the Writing Room only if installed.
 
 ## Verification status
 
 Checked: native Rust tests; parity 701/701 in the Claude desktop app's
 Chromium-based browser; typing, backspace, examples and bidirectional conversion
-by hand there; no network requests beyond the local files.
+by hand there; copy buttons by a real click; light and dark, desktop and 375px mobile renders inspected in the same browser; no network requests beyond the local files.
 **Not checked:** Safari, Firefox, Windows, Linux, phone keyboards, screen readers,
 other fonts, deployment.
 

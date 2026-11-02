@@ -3,46 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>T-Time parity check</title>
+<link rel="icon" href="assets/logo-square.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><h1>Parity check <span class="sub">Wasm build against the curated fixtures</span></h1><nav><a href="index.html">Writing Room</a> · <a href="converter.html">Converter</a></nav>
-<p class="build" id="build"></p></header>
-<main>
-  <p class="hint">Runs every fixture line through the WebAssembly build and compares with the expected text, the same check the native Rust tests make. Generated fixtures are copied here by <code>scripts/build-web.sh</code>.</p>
-  <p id="summary" role="status">running…</p>
-  <table id="files"></table>
-  <pre id="failures"></pre>
-  <p><a href="index.html">Back to the writing room</a></p>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="T-Time, writing room">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-long-dark.svg">
+      <img src="assets/logo-long.svg" alt="T-time" width="111" height="38">
+    </picture>
+    <span class="badge">Experimental prototype</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Writing Room</a>
+    <a href="converter.html">Converter</a>
+    <a href="parity.html" aria-current="page">Tools</a>
+  </nav>
+</div></header>
+<main class="wrap" id="main">
+  <div class="intro">
+    <h1>Parity check</h1>
+    <p class="subtitle">The WebAssembly build against the curated fixtures.</p>
+    <p class="lede">Runs every fixture line through the browser build and compares with the expected text, the same check the native Rust tests make.</p>
+  </div>
+  <p id="summary" class="summaryline" role="status" aria-live="polite">running…</p>
+  <div class="paper" style="padding: var(--s2) var(--s3);">
+    <table class="data" id="files"><thead><tr><th>Fixture file</th><th>Cases</th><th>Result</th></tr></thead><tbody></tbody></table>
+  </div>
+  <h2>Failures</h2>
+  <p class="hint">Code points are hexadecimal. Copy them into a bug report.</p>
+  <button type="button" id="copy-failures" class="quiet">Copy failures</button> <span id="status" class="status" role="status" aria-live="polite"></span>
+  <pre class="report" id="failures">none</pre>
 </main>
-<script type="module">
-import init, { convert_json, version } from "./pkg/ttime_wasm.js";
-const unescape = (s) => s.replace(/\\u([0-9A-Fa-f]{4})/g, (_, h) => String.fromCodePoint(parseInt(h, 16)));
-await init();
-document.getElementById("build").textContent = version();
-const names = (await (await fetch("fixtures/index.txt")).text()).split("\n").filter((n) => n.endsWith(".tsv"));
-let total = 0, failed = 0, out = [];
-const table = document.getElementById("files");
-for (const name of names) {
-  const text = await (await fetch("fixtures/" + name)).text();
-  const pre = name === "precomposed.tsv";
-  let n = 0, bad = 0;
-  for (const line of text.split("\n")) {
-    if (!line || line.startsWith("#")) continue;
-    const tab = line.indexOf("\t");
-    if (tab < 0) continue;
-    const input = line.slice(0, tab), expected = unescape(line.slice(tab + 1));
-    const got = JSON.parse(convert_json(input, pre)).text;
-    n++;
-    if (got !== expected) { bad++; out.push(`${name}: ${JSON.stringify(input)} expected ${[...expected].map(c=>c.codePointAt(0).toString(16)).join(" ")} got ${[...got].map(c=>c.codePointAt(0).toString(16)).join(" ")}`); }
-  }
-  total += n; failed += bad;
-  table.insertAdjacentHTML("beforeend", `<tr><td>${name}</td><td>${n}</td><td>${bad ? bad + " failed" : "ok"}</td></tr>`);
-}
-document.getElementById("summary").textContent = `${total} cases, ${failed} failed`;
-document.getElementById("failures").textContent = out.join("\n");
-document.title = `parity: ${total} cases, ${failed} failed`;
-</script>
+<footer class="site-footer"><div class="wrap">
+  <p><strong>Experimental prototype.</strong> Conversion runs in your browser and your text is not sent to any server. The host that serves this page may keep ordinary access logs, and the page is public to anyone with the link.</p>
+  <details>
+    <summary>Build information</summary>
+    <p class="hint">Include this in bug reports.</p>
+    <p class="build" id="build">loading…</p>
+  </details>
+  <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
+</div></footer>
+<script type="module" src="parity.js"></script>
 </body>
 </html>

@@ -73,7 +73,11 @@ function inspect() {
   }
   for (const d of diags) {
     const li = document.createElement("li");
-    li.textContent = `${d.code} (${d.severity}, bytes ${d.start}–${d.end}): ${d.message}`;
+    li.className = d.severity === "Warning" ? "warn" : "note";
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = d.severity === "Warning" ? "Warning" : "Note";
+    li.append(tag, `${d.code} (bytes ${d.start}–${d.end}): ${d.message}`);
     ul.append(li);
   }
   report();
@@ -176,8 +180,13 @@ function bind() {
   });
   $("font").addEventListener("change", (e) => {
     const v = e.target.value;
-    const f = { auto: "", noto: '"Noto Serif Tibetan"', jomolhari: '"Jomolhari"', kailasa: '"Kailasa"' }[v];
-    editor.style.fontFamily = f ? `${f}, serif` : "";
+    const stacks = {
+      auto: "",
+      jomolhari: '"Jomolhari", "Noto Serif Tibetan", serif',
+      system: '"Kailasa", "Tibetan Machine Uni", "Microsoft Himalaya", "Noto Serif Tibetan", serif',
+    };
+    if (stacks[v]) document.documentElement.style.setProperty("--tib", stacks[v]);
+    else document.documentElement.style.removeProperty("--tib");
   });
   for (const id of ["expected", "comment", "include-text"]) $(id).addEventListener("input", report);
   $("copy-report").addEventListener("click", async () => {
@@ -193,14 +202,19 @@ function bind() {
 function buildExamples() {
   const host = $("examples");
   for (const [title, items] of EXAMPLES) {
+    const group = document.createElement("div");
+    group.className = "example-group";
     const h = document.createElement("h3");
     h.textContent = title;
     const row = document.createElement("div");
-    row.className = "row";
+    row.className = "chips";
     for (const [ewts, note] of items) {
       const b = document.createElement("button");
       b.type = "button";
-      b.textContent = ewts.trim();
+      b.className = "chip";
+      const code = document.createElement("code");
+      code.textContent = ewts.trim();
+      b.append(code);
       const small = document.createElement("small");
       small.textContent = note;
       b.append(small);
@@ -214,7 +228,8 @@ function buildExamples() {
       });
       row.append(b);
     }
-    host.append(h, row);
+    group.append(h, row);
+    host.append(group);
   }
 }
 

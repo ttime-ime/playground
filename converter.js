@@ -18,10 +18,26 @@ function setStatus(msg) {
 function diagItems(diags, source, label) {
   return diags.map((d) => {
     const li = document.createElement("li");
+    li.className = d.severity === "Warning" ? "warn" : "note";
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = d.severity === "Warning" ? "Warning" : "Note";
     const at = slice(source, d.start, d.end);
-    li.textContent = `${label}: ${d.code} (${d.severity}) at ${JSON.stringify(at)}: ${d.message}`;
+    li.append(tag, `${label}: ${d.code} at ${JSON.stringify(at)}: ${d.message}`);
     return li;
   });
+}
+
+function countBadge() {
+  const items = [...$("r-diag").children].filter((li) => li.className);
+  const warn = items.filter((li) => li.className === "warn").length;
+  const note = items.length - warn;
+  const el = $("diag-count");
+  const parts = [];
+  if (warn) parts.push(`${warn} warning${warn > 1 ? "s" : ""}`);
+  if (note) parts.push(`${note} note${note > 1 ? "s" : ""}`);
+  el.textContent = parts.length ? parts.join(", ") : "no notes";
+  el.classList.toggle("has", warn > 0);
 }
 
 function update() {
@@ -49,7 +65,8 @@ function update() {
     ul.append(...diagItems(f.diagnostics, r.text, "EWTS→Unicode"));
   }
   if (!ul.children.length) ul.innerHTML = "<li>none</li>";
-  $("r-dir").textContent = last === "ewts" ? "EWTS box" : "Unicode box";
+  $("r-dir").textContent = last === "ewts" ? "EWTS box, converted to Unicode" : "Unicode box, converted to EWTS";
+  countBadge();
   $("r-fid").textContent = $("uni").value || $("ewts").value ? fid : "—";
   $("r-rt").textContent = $("uni").value || $("ewts").value ? rt : "—";
   $("r-cp").textContent = hex($("uni").value);
@@ -76,10 +93,19 @@ $("build").textContent = version();
 $("ewts").addEventListener("input", () => { last = "ewts"; update(); });
 $("uni").addEventListener("input", () => { last = "uni"; update(); });
 $("precomposed").addEventListener("change", (e) => { precomposed = e.target.checked; update(); });
+$("example").addEventListener("change", (e) => {
+  if (!e.target.value) return;
+  $("ewts").value = e.target.value;
+  last = "ewts";
+  update();
+  e.target.value = "";
+  $("ewts").focus();
+});
 $("clear").addEventListener("click", () => { $("ewts").value = ""; $("uni").value = ""; last = "ewts"; update(); });
 $("copy-uni").addEventListener("click", () => copy($("uni").value, "Unicode copied"));
 $("copy-ewts").addEventListener("click", () => copy($("ewts").value, "EWTS copied"));
 $("copy-report").addEventListener("click", () => copy($("report").textContent, "Report copied"));
 $("expected").addEventListener("input", report);
 $("include-text").addEventListener("input", report);
+$("ewts").value = "bkra shis bde legs";
 update();
