@@ -33,7 +33,7 @@
   </div>
 
   <nav class="paper" aria-label="On this page"><p class="actions-row">
-    <a class="button" href="#tasks">Task sheet</a><a class="button" href="#script">Session script</a><a class="button" href="#log">Findings log</a><a class="button" href="symbols.html">Symbol review</a>
+    <a class="button" href="#tasks">Task sheet</a><a class="button" href="#script">Session script</a><a class="button" href="#functions">Functions to test</a><a class="button" href="#log">Findings log</a><a class="button" href="symbols.html">Symbol review</a>
   </p></nav>
 
   <section class="paper" aria-labelledby="rules-h">
@@ -91,6 +91,26 @@
     </ul>
     <h3>Closing</h3>
     <p>Ask if they are willing to mark entries on the symbol review page later. Ask permission to keep any sample text, and say what for. Thank them, and say what happens next and when they will hear back.</p>
+  </section>
+
+  <section class="paper" id="functions" aria-labelledby="fn-h">
+    <h2 id="fn-h">Functions to test</h2>
+    <p class="hint">Candidates only. None is a commitment, and most are not built. Ask what the participant does today before showing any of them, and record how often they would use it. Each must earn its place by making Tibetan writing more accurate, more predictable or less laborious.</p>
+    <table class="data">
+      <thead><tr><th scope="col">Function</th><th scope="col">What to learn</th><th scope="col">Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Latin escape</strong></td><td>How often they switch between Tibetan and Latin, how they do it now, and whether a toggle, an inline syntax or the OS input switch suits them.</td><td>Required; not designed</td></tr>
+        <tr><td><strong>Diacritic dead keys in direct mode</strong> (ā ī ū ṛ ṝ ḷ ḹ ṃ ḥ ṅ ñ ṭ ḍ ṇ ś ṣ)</td><td>Which layout or method they use for these letters today, and which trigger works across their keyboard layouts. Needed on macOS, Windows and Linux.</td><td>Not built; core table and web prototype proposed</td></tr>
+        <tr><td><strong>See-through typing</strong></td><td>Whether seeing the typed EWTS, the syllable's parts and warnings beside the caret helps or distracts.</td><td>Not built; web prototype proposed</td></tr>
+        <tr><td><strong>Sanskrit from IAST</strong></td><td>Whether typing Sanskrit in IAST and getting Tibetan-script stacks matches a real task.</td><td>Idea</td></tr>
+        <tr><td><strong>Paste and diagnose</strong></td><td>How often they receive Tibetan text with problems, and what the problems are (order, stray marks, legacy fonts).</td><td>Partly in the Converter; idea for more</td></tr>
+        <tr><td><strong>Diplomatic mode</strong></td><td>Which automatic changes are unacceptable, and whether a visible warn-only state would be wanted.</td><td>Idea</td></tr>
+        <tr><td><strong>Personal abbreviations</strong></td><td>Which phrases, names or formulas they type repeatedly.</td><td>Idea (roadmap P2)</td></tr>
+        <tr><td><strong>Symbols with recents and favourites</strong></td><td>Which marks they look up or copy, and how often.</td><td>Symbols panel built; recents not</td></tr>
+        <tr><td><strong>Stack composer</strong></td><td>Whether uncommon stacks are hard to type, to remember or to render.</td><td>Only if difficulty is observed</td></tr>
+      </tbody>
+    </table>
+    <p class="hint">Not planned: next-syllable prediction (a spike on classical prose saved too little to justify it) and automatic correction of scholarly text.</p>
   </section>
 
   <section class="paper" id="log" aria-labelledby="log-h">
