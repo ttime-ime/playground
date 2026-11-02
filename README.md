@@ -44,7 +44,7 @@ Colour and type tokens live at the top of `style.css`, light and dark via
 
 - `assets/logo-long.svg`, `logo-long-dark.svg`, `logo-square.svg`: supplied logos, unmodified. The `<picture>` element picks the dark variant in dark mode.
 - `assets/typing.webp`: the supplied `typing.png`, trimmed and resized, converted to WebP. Project artwork, not under the code licence.
-- `assets/fonts/`: Newsreader (roman and italic) and Noto Serif Tibetan, subset-free woff2 conversions, under the SIL OFL 1.1 (texts alongside; neither font declares a reserved name). Source Sans 3 and Jomolhari were not bundled because their reserved font names forbid modified or subset versions. Sans and mono use system stacks; Jomolhari is selectable in the Writing Room only if installed.
+- `assets/fonts/`: Newsreader (roman and italic) and Noto Serif Tibetan, woff2 conversions (subsetting is permitted for these two), under the SIL OFL 1.1 (texts alongside; neither font declares a reserved name). Source Sans 3 and Jomolhari were not bundled because their reserved font names forbid modified or subset versions. Sans and mono use system stacks; Jomolhari is selectable in the Writing Room only if installed.
 
 ## Verification status
 
