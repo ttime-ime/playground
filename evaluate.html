@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>T-Time evaluation kit</title>
+<link rel="icon" href="assets/logo-square.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="T-Time, writing room">
+    <picture><source srcset="assets/logo-long-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/logo-long.webp" alt="T-time" width="175" height="48"></picture>
+    <span class="badge">Experimental prototype</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Writing Room</a>
+    <a href="converter.html">Converter</a>
+    <a href="parity.html">Tools</a>
+  </nav>
+</div></header>
+<main class="wrap" id="main">
+  <div class="hero">
+    <div class="intro">
+      <h1>Evaluation kit</h1>
+      <p class="subtitle">Watch first, then decide.</p>
+      <p class="lede">For a 20-minute session with a Tibetologist: what to give the participant, what the facilitator does, and where to record what happened.</p>
+    </div>
+    <img src="assets/typing.webp" alt="Momo the yak and Tibby the cat-maid typing together at a table" width="1200" height="567">
+  </div>
+
+  <nav class="paper" aria-label="On this page"><p class="actions-row">
+    <a class="button" href="#tasks">Task sheet</a><a class="button" href="#script">Session script</a><a class="button" href="#log">Findings log</a><a class="button" href="symbols.html">Symbol review</a>
+  </p></nav>
+
+  <section class="paper" aria-labelledby="rules-h">
+    <h2 id="rules-h">Ground rules</h2>
+    <ul>
+      <li>Two or more sessions if possible, one with an experienced Tibetologist.</li>
+      <li>Observe tasks. Do not ask the participant to approve a feature list.</li>
+      <li>Ask permission before keeping any sample text. Nothing is collected automatically.</li>
+      <li>Separate what you saw from what you assume, and say what you would reject or defer.</li>
+      <li>This is a web prototype, not the macOS input method. Do not judge the installed experience from it.</li>
+    </ul>
+    <p class="hint">Before: open the <a href="index.html">Writing Room</a> in the participant's usual browser, check Tibetan displays, and ask for two or three difficult sequences from their field. After, within a day: complete the log, update the ranked backlog, and write down what to reject or defer.</p>
+  </section>
+
+  <section class="paper" id="tasks" aria-labelledby="tasks-h">
+    <h2 id="tasks-h">Task sheet (for the participant)</h2>
+    <p>Open the <a href="index.html">Writing Room</a>. Type in EWTS; Tibetan appears. Highlighted text is still settling and becomes fixed when you press space or Enter. Think aloud if you can.</p>
+    <ol>
+      <li><strong>Write a short phrase.</strong> Type a line of Tibetan you would normally write, such as a title or a sentence from your work. Tell us when it looks right.</li>
+      <li><strong>Correct a mistake.</strong> Change one syllable in the middle of the line. Then add one more word at the end.</li>
+      <li><strong>Sanskrit.</strong> Enter a Sanskrit mantra or a Sanskrit term from your own field, written in Tibetan script.</li>
+      <li><strong>Marks.</strong> Add a mark you often need that is not an ordinary letter: a head mark, a special shad, a bracket, a number, or something else. Use whatever route you like.</li>
+      <li><strong>Inspect and copy.</strong> Choose a sequence you find difficult. Look at what the page shows about it below the editor. Copy it.</li>
+    </ol>
+    <p>Afterwards, if you are willing, open the <a href="symbols.html">symbol review</a> page, mark any label or EWTS that is wrong, and add anything missing. Nothing is sent anywhere unless you press a button.</p>
+  </section>
+
+  <section class="paper" id="script" aria-labelledby="script-h">
+    <h2 id="script-h">Session script (for the facilitator)</h2>
+    <h3>Opening, before the clock</h3>
+    <ul>
+      <li>Thank them. This tests the prototype, not the participant.</li>
+      <li>“Nothing you type is sent anywhere. I will ask before I keep any text.”</li>
+      <li>“If something is confusing, say so. That is the useful result.”</li>
+      <li>Ask consent to take notes, and separately to keep any sample text.</li>
+    </ul>
+    <h3>0–4 min: current workflow</h3>
+    <p>Ask, and let them talk: what keyboard or input method do you use for Tibetan, and why? What makes you leave the keyboard? Which marks, Sanskrit stacks, names or terms are hard to enter? How often do you convert between Tibetan Unicode and EWTS? Does it differ for classical, modern, or manuscript transcription?</p>
+    <p class="hint">Observe: tools named, workarounds, pain points. Do not suggest features.</p>
+    <h3>4–9 min: ordinary Tibetan in the Writing Room</h3>
+    <p>Give tasks 1 and 2. Say nothing about how it works. Afterwards ask: “Was anything surprising?” “Did you check the output? How?”</p>
+    <p class="hint">Observe: speed, hesitation, errors, how they handle the highlighted text, whether they trust the result, editing friction (backspace, moving the cursor).</p>
+    <h3>9–14 min: Sanskrit and rare punctuation</h3>
+    <p>Give tasks 3 and 4. Let them find the Symbols panel themselves; if they have not after about a minute, note that, then point to it. Ask: “What is missing?” “Is the label what you would call it?”</p>
+    <p class="hint">Observe: do they search, browse by category, or type EWTS? Which marks do they reach for? Which do they look for and not find?</p>
+    <h3>14–17 min: inspect and copy a difficult sequence</h3>
+    <p>Give task 5 and point them to the inspector under the editor. Ask: “Would you want to see this while writing, or only on request?”</p>
+    <p class="hint">Observe: whether code points and the NFC line mean anything to them, whether the diagnostics help, whether they would copy this into their own document.</p>
+    <h3>17–20 min: toolbar or on-demand menu</h3>
+    <p>Describe both (no prototype yet): a small always-visible toolbar of marks and stacks beside the text, or a menu that appears only when asked, for example with a shortcut. Ask which they prefer and why. Then one question each, noting the answers:</p>
+    <ul>
+      <li>Would completions help, or interrupt your work?</li>
+      <li>Which corrections would be unacceptable in a diplomatic transcription?</li>
+      <li>What would make you switch from your present method?</li>
+    </ul>
+    <h3>Closing</h3>
+    <p>Ask if they are willing to mark entries on the symbol review page later. Ask permission to keep any sample text, and say what for. Thank them, and say what happens next and when they will hear back.</p>
+  </section>
+
+  <section class="paper" id="log" aria-labelledby="log-h">
+    <h2 id="log-h">Findings log</h2>
+    <p class="hint">A template to copy into your own notes. Keep one section per session and update the ranked backlog afterwards. This page does not save what you type.</p>
+    <label class="label field" for="log-text">Template (editable)
+      <textarea id="log-text" rows="22" spellcheck="false"># Findings log
+
+One copy of the session section per session. Keep the backlog at the end up to date.
+
+## Session
+
+- Date:
+- Participant (initials or role only):
+- Experience with Tibetan (classical, modern, manuscripts; years):
+- Current input method:
+- Browser and device:
+- Consent to keep sample text (yes/no, what for):
+- Facilitator:
+
+### Observations (what happened)
+
+| # | Time | Task | What was observed | Severity (blocker / friction / minor) | Workaround used |
+|---|---|---|---|---|---|
+
+### Said by the participant (quote or close paraphrase)
+
+| # | Topic | Statement |
+|---|---|---|
+
+### Answers
+
+- Completions help or interrupt:
+- Unacceptable corrections in diplomatic transcription:
+- Toolbar or on-demand menu, and why:
+- What would make them switch:
+- Marks or letters looked for and not found:
+- Labels or EWTS they disagreed with:
+
+### Assumptions (not observed; to test)
+
+-
+
+### Defects found
+
+| # | What | Reproduce with | Issue link |
+|---|---|---|---|
+
+## Ranked backlog (across sessions)
+
+Rank by how often it was observed and how much it hurt. Say how many sessions
+support each line.
+
+| Rank | Feature or fix | Observed in (sessions) | Severity | Evidence | Decision (build / defer / reject) |
+|---|---|---|---|---|---|
+
+### To reject or defer, and why
+
+-
+
+### Revised product hypothesis
+
+-
+</textarea>
+    </label>
+    <p class="actions-row"><button type="button" id="copy-log">Copy template</button><span class="hint" id="status" role="status"></span></p>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p><strong>Experimental prototype.</strong> Nothing you type on this page is sent to any server.</p>
+  <details>
+    <summary>Build information</summary>
+    <p class="hint">Include this in bug reports.</p>
+    <p class="build" id="build">loading…</p>
+  </details>
+  <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
+</div></footer>
+<script type="module" src="evaluate.js"></script>
+</body>
+</html>
