@@ -64,8 +64,6 @@ function inspect() {
   $("i-cp").textContent = cps.join(" ") + ([...editor.value].length > 300 ? " …" : "");
   const nfc = editor.value.normalize("NFC") === editor.value;
   $("i-nf").textContent = editor.value === "" ? "—" : nfc ? "NFC (unchanged by normalization)" : "Not NFC: normalizing would change this text";
-  const ul = $("i-diag");
-  ul.textContent = "";
   // In diplomatic mode the whole typed text is checked, so a warning is not lost
   // when its syllable is fixed. Direct edits make the typed text unreliable.
   const whole = session.diplomatic() && typed !== null;
@@ -76,10 +74,22 @@ function inspect() {
   $("i-diag-label").textContent = whole ? "Diagnostics (all typed text)" : "Diagnostics (highlighted run)";
   const bytes = new TextEncoder().encode(source);
   const quote = (d) => new TextDecoder().decode(bytes.slice(d.start, d.end));
+  drawDiagnostics($("i-diag"), diags, quote);
+  if (session.diplomatic()) drawDiagnostics($("dip-diag"), diags, quote);
+  else {
+    const li = document.createElement("li");
+    li.textContent = "Diplomatic mode is off.";
+    $("dip-diag").replaceChildren(li);
+  }
   const warnings = diags.filter((d) => d.severity === "Warning").length;
   const state = $("dip-state");
   state.hidden = !session.diplomatic();
   state.textContent = warnings === 0 ? "Diplomatic: no warnings" : `Diplomatic: ${warnings} warning${warnings === 1 ? "" : "s"}`;
+  report();
+}
+
+function drawDiagnostics(ul, diags, quote) {
+  ul.textContent = "";
   if (diags.length === 0) {
     const li = document.createElement("li");
     li.textContent = "none";
@@ -94,7 +104,6 @@ function inspect() {
     li.append(tag, `${d.code} on “${quote(d)}”: ${d.message}`);
     ul.append(li);
   }
-  report();
 }
 
 function issueUrl(title, body) {
@@ -123,6 +132,39 @@ function report() {
   lines.push(`Comment: ${$("comment").value || "(none)"}`);
   $("report").textContent = lines.join("\n");
   $("gh-issue").href = issueUrl("Writing Room: ", $("report").textContent);
+}
+
+// Tools live in tabs under the editor. A tab opens its panel; selecting the open
+// tab again closes it. Modes stay on when their panel is closed, and the tab
+// shows a dot so the state is never hidden.
+function initTabs() {
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  const select = (tab, open) => {
+    for (const t of tabs) {
+      const on = open && t === tab;
+      t.setAttribute("aria-selected", String(on));
+      $(t.getAttribute("aria-controls")).hidden = !on;
+    }
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => select(tab, tab.getAttribute("aria-selected") !== "true"));
+    tab.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      const to = e.key === "Home" ? 0 : e.key === "End" ? tabs.length - 1 : step === undefined ? -1 : (i + step + tabs.length) % tabs.length;
+      if (to < 0) return;
+      e.preventDefault();
+      tabs.forEach((t, k) => (t.tabIndex = k === to ? 0 : -1));
+      tabs[to].focus();
+    });
+  });
+}
+
+function showModes() {
+  const modes = { diplomatic: session.diplomatic(), form: session.precomposed() };
+  for (const [k, on] of Object.entries(modes)) {
+    $(`tab-${k}`).classList.toggle("on", on);
+    $(`on-${k}`).textContent = on ? " (on)" : "";
+  }
 }
 
 function newSession(precomposed, diplomatic, keepFrom) {
@@ -207,10 +249,12 @@ function bind() {
   });
   $("precomposed").addEventListener("change", (e) => {
     session = newSession(e.target.checked, session.diplomatic(), session);
+    showModes();
     render();
   });
   $("diplomatic").addEventListener("change", (e) => {
     session = newSession(session.precomposed(), e.target.checked, session);
+    showModes();
     setStatus(e.target.checked ? "Diplomatic mode on: text is unchanged, choices are reported" : "Diplomatic mode off");
     render();
   });
@@ -278,10 +322,9 @@ $("build").textContent = version();
 session = new Session(false, false);
 buildExamples();
 bind();
+initTabs();
 initPalette({
-  toggle: $("palette-toggle"),
-  panel: $("palette"),
-  closeButton: $("palette-close"),
+  panel: $("panel-symbols"),
   input: $("pal-search"),
   cats: $("pal-cats"),
   count: $("pal-count"),
@@ -300,6 +343,7 @@ initPalette({
   },
   focusEditor: () => editor.focus(),
 });
+showModes();
 render();
 editor.focus();
 window.__ttime = { get session() { return session; } };

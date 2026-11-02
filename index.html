@@ -37,7 +37,6 @@
     <h2 id="ed-h" class="visually-hidden">Editor</h2>
     <div class="toolbar">
       <label class="check"><input type="checkbox" id="ewts-on" checked> EWTS typing</label>
-      <label class="check" title="Same text, but every choice or ignored letter is reported as a warning"><input type="checkbox" id="diplomatic"> Diplomatic</label>
       <span id="dip-state" class="badge" hidden role="status"></span>
       <label class="label field" for="font">Font
         <select id="font">
@@ -46,7 +45,6 @@
           <option value="system">System Tibetan font</option>
         </select>
       </label>
-      <button type="button" id="palette-toggle" class="quiet" aria-expanded="false" aria-controls="palette">Symbols</button>
       <div class="actions">
         <span id="status" class="status" role="status" aria-live="polite"></span>
         <button type="button" id="clear" class="quiet">Clear</button>
@@ -55,29 +53,22 @@
     </div>
     <textarea id="editor" class="tib writing" lang="bo" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
       aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
-  </section>
-  <p id="limits" class="hint"><strong>Limits.</strong> EWTS typing works at the end of the text. If you move the cursor into earlier text, typing there is ordinary browser editing. Backspace removes the last typed letter of the highlighted run, then behaves normally. Phone keyboards that use composition may bypass EWTS typing. This is not an IME, and has no dictionary or suggestions.</p>
-
-  <section id="palette" class="paper palette" aria-labelledby="pal-h" hidden>
-    <div class="palette-head">
-      <h2 id="pal-h">Symbols</h2>
-      <button type="button" id="palette-close" class="quiet">Close</button>
+    <div class="tabs" role="tablist" aria-label="Tools">
+      <button type="button" role="tab" id="tab-symbols" class="tab" aria-selected="false" aria-controls="panel-symbols" tabindex="0">Symbols</button>
+      <button type="button" role="tab" id="tab-inspector" class="tab" aria-selected="false" aria-controls="panel-inspector" tabindex="-1">Inspector</button>
+      <button type="button" role="tab" id="tab-diplomatic" class="tab" aria-selected="false" aria-controls="panel-diplomatic" tabindex="-1">Diplomatic<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-diplomatic></span></button>
+      <button type="button" role="tab" id="tab-form" class="tab" aria-selected="false" aria-controls="panel-form" tabindex="-1">Output form<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-form></span></button>
+      <button type="button" role="tab" id="tab-report" class="tab" aria-selected="false" aria-controls="panel-report" tabindex="-1">Report a problem</button>
     </div>
+    <div role="tabpanel" id="panel-symbols" class="tabpanel" aria-labelledby="tab-symbols" hidden>
     <p class="hint"><strong>Draft catalogue.</strong> The sequences are checked against the engine; the labels have not been reviewed by a Tibetologist. Choose a symbol to insert it where the cursor is, or copy it. Reviewing the labels? <a href="symbols.html">Open the review page</a>.</p>
     <label class="label" for="pal-search">Search by name, code point (0F0D), EWTS or the character itself</label>
     <input type="search" id="pal-search" autocomplete="off" spellcheck="false">
     <div id="pal-cats" class="chips" role="group" aria-label="Category"></div>
     <p id="pal-count" class="hint" role="status" aria-live="polite"></p>
     <ul id="pal-list" class="sym-grid"></ul>
-  </section>
-
-  <h2>Examples</h2>
-  <p class="hint">Each button replaces the text with a sample. The last group shows unsettled questions that a specialist should judge.</p>
-  <div id="examples"></div>
-
-  <details class="paper" id="inspector">
-    <summary>Inspector</summary>
-    <div class="disclosure-body">
+      </div>
+    <div role="tabpanel" id="panel-inspector" class="tabpanel" aria-labelledby="tab-inspector" hidden>
       <dl class="facts">
         <dt>Raw EWTS, highlighted run</dt><dd><code id="i-raw"></code></dd>
         <dt>Highlighted Unicode</dt><dd><span id="i-prov" lang="bo"></span></dd>
@@ -87,19 +78,16 @@
         <dt id="i-diag-label">Diagnostics (highlighted run)</dt><dd><ul class="diag" id="i-diag"></ul></dd>
       </dl>
     </div>
-  </details>
-
-  <details class="paper">
-    <summary>Advanced</summary>
-    <div class="disclosure-body">
+    <div role="tabpanel" id="panel-diplomatic" class="tabpanel" aria-labelledby="tab-diplomatic" hidden>
+      <label class="check" title="Same text, but every choice or ignored letter is reported as a warning"><input type="checkbox" id="diplomatic"> Diplomatic mode</label>
+      <p class="hint">The text is exactly what it would be otherwise. Choices the converter makes, and letters it ignores, are reported below as you type. Try <code>kaa</code>, <code>oM</code>, <code>ghri</code>, <code>gya</code>.</p>
+      <ul class="diag" id="dip-diag"></ul>
+    </div>
+    <div role="tabpanel" id="panel-form" class="tabpanel" aria-labelledby="tab-form" hidden>
       <label class="check"><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
       <p class="hint">Writes a few Tibetan letters as single precomposed characters (for example U+0F43). The result is not NFC. Text already fixed is kept as it is; only the highlighted run is re-read in the new mode.</p>
     </div>
-  </details>
-
-  <details class="paper" id="report-box">
-    <summary>Report a problem</summary>
-    <div class="disclosure-body">
+    <div role="tabpanel" id="panel-report" class="tabpanel" aria-labelledby="tab-report" hidden>
       <p class="hint">Nothing is sent from this page. Review the text, then either copy it or open a pre-filled issue on GitHub, where you will see it before you submit. Issues on this repository are public, so untick the text box below if the text is private.</p>
       <label class="formrow">What you expected <textarea id="expected" rows="2" placeholder="Expected Tibetan or EWTS"></textarea></label>
       <label class="formrow">Comment <textarea id="comment" rows="2"></textarea></label>
@@ -110,7 +98,13 @@
         <a class="button" id="gh-issue" href="https://github.com/ttime-ime/playground/issues/new" target="_blank" rel="noopener">Report on GitHub</a>
       </div>
     </div>
-  </details>
+  </section>
+  <p id="limits" class="hint"><strong>Limits.</strong> EWTS typing works at the end of the text. If you move the cursor into earlier text, typing there is ordinary browser editing. Backspace removes the last typed letter of the highlighted run, then behaves normally. Phone keyboards that use composition may bypass EWTS typing. This is not an IME, and has no dictionary or suggestions.</p>
+
+  <h2>Examples</h2>
+  <p class="hint">Each button replaces the text with a sample. The last group shows unsettled questions that a specialist should judge.</p>
+  <div id="examples"></div>
+
 </main>
 <footer class="site-footer"><div class="wrap">
   <p><strong>Experimental prototype.</strong> Conversion runs in your browser and your text is not sent to any server. The host that serves this page may keep ordinary access logs, and the page is public to anyone with the link.</p>

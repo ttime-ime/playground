@@ -5,7 +5,8 @@ import { search_symbols_json, symbol_categories_json } from "./pkg/ttime_wasm.js
 //
 // `insert(text)` puts text at the caret; `copy(text)` puts it on the clipboard.
 // Both are supplied by the page, so the palette knows nothing about composition.
-export function initPalette({ toggle, panel, closeButton, input, cats, count, list, insert, copy, focusEditor }) {
+// Where the panel is shown is the page's business; Escape returns focus to the editor.
+export function initPalette({ panel, input, cats, count, list, insert, copy, focusEditor }) {
   const categories = JSON.parse(symbol_categories_json());
   let category = "";
 
@@ -60,24 +61,10 @@ export function initPalette({ toggle, panel, closeButton, input, cats, count, li
     }
   }
 
-  function open() {
-    panel.hidden = false;
-    toggle.setAttribute("aria-expanded", "true");
-    input.focus();
-    input.select();
-  }
-  function close() {
-    panel.hidden = true;
-    toggle.setAttribute("aria-expanded", "false");
-    focusEditor();
-  }
-
-  toggle.addEventListener("click", () => (panel.hidden ? open() : close()));
-  closeButton.addEventListener("click", close);
   panel.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       e.preventDefault();
-      close();
+      focusEditor();
     }
   });
   input.addEventListener("input", draw);

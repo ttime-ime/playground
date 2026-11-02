@@ -312,3 +312,19 @@ a.button:hover { border-color: var(--coral); }
 #filter { display: block; width: 100%; min-height: 40px; margin-top: var(--s1); padding: 0 var(--s3); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); }
 #table td:nth-child(2) { min-width: 14rem; }
 #table td:nth-child(8) input { width: 100%; min-width: 10rem; min-height: 32px; padding: 0 var(--s2); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); }
+
+/* ---------- Tool tabs under the editor ---------- */
+.tabs { display: flex; flex-wrap: wrap; gap: var(--s1); margin-top: var(--s3); border-bottom: 1px solid var(--line); }
+.tab {
+  display: inline-flex; align-items: center; gap: var(--s2); min-height: 40px; padding: 0 var(--s4);
+  background: transparent; border: 1px solid transparent; border-bottom: 0; border-radius: var(--r) var(--r) 0 0;
+  color: var(--muted); font-size: 0.875rem; font-weight: 500; margin-bottom: -1px;
+}
+.tab:hover { color: var(--text); }
+.tab[aria-selected="true"] { background: var(--bg); border-color: var(--line); color: var(--text); }
+.tab .dot { width: 7px; height: 7px; border-radius: 50%; background: transparent; border: 1px solid var(--line); }
+.tab.on .dot { background: var(--turquoise); border-color: var(--turquoise); }
+.tabpanel { padding: var(--s4) 0 0; }
+.tabpanel[hidden] { display: none; }
+.tabpanel > :first-child { margin-top: 0; }
+@media (max-width: 520px) { .tab { padding: 0 var(--s3); } }

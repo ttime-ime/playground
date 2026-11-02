@@ -26,9 +26,12 @@ To refresh: from `ttime`, run `scripts/build-web.sh` (writes into `../playground
 
 Run locally: `python3 -m http.server 8000`, then open http://localhost:8000.
 
-## Symbol palette
+## Tool tabs and the symbol palette
 
-The Writing Room has a **Symbols** button that opens a searchable palette
+The tools sit in tabs directly under the editor: Symbols, Inspector, Diplomatic, Output form and Report a problem. Selecting a tab opens its panel; selecting it again closes it. Everything updates live while you type. Modes (Diplomatic, Output form) stay on when their panel is closed, and their tab shows a dot. New tools for testing are added as tabs.
+
+
+The Writing Room has a **Symbols** tab, under the editor, that opens a searchable palette
 (`palette.js`) of Tibetan punctuation, marks and Sanskrit letters. Search by name,
 code point, EWTS or the character; filter by category; **Insert** puts the symbol at the
 caret (a pending EWTS run is fixed first) and **Copy** puts it on the clipboard.
