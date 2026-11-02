@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>T-Time symbol review</title>
+<link rel="icon" href="assets/logo-square.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="T-Time, writing room">
+    <picture><source srcset="assets/logo-long-dark.webp" media="(prefers-color-scheme: dark)"><img src="assets/logo-long.webp" alt="T-time" width="175" height="48"></picture>
+    <span class="badge">Experimental prototype</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html">Writing Room</a>
+    <a href="converter.html">Converter</a>
+    <a href="parity.html">Tools</a>
+  </nav>
+</div></header>
+<main class="wrap" id="main">
+  <div class="hero">
+    <div class="intro">
+      <h1>Symbol review</h1>
+      <p class="subtitle">For the specialist's eye.</p>
+      <p class="lede">The draft catalogue behind the Writing Room's Symbols panel. Nothing here has been reviewed by a Tibetologist. Mark each entry, add a note where something is wrong or missing, then copy or send the review.</p>
+    </div>
+    <img src="assets/typing.webp" alt="Momo the yak and Tibby the cat-maid typing together at a table" width="1200" height="567">
+  </div>
+
+  <section class="paper" aria-labelledby="how-h">
+    <h2 id="how-h">What to check</h2>
+    <ul>
+      <li>Is the <strong>label</strong> how a scholar would name the mark?</li>
+      <li>Is the <strong>category</strong> sensible, and is the <strong>EWTS</strong> what you would type?</li>
+      <li>Is anything <strong>missing</strong>, or <strong>misleading</strong>?</li>
+    </ul>
+    <p class="hint">Evidence says where an entry comes from: a fixture file means that EWTS to Unicode pair is listed there (other converters agree where noted in the repository), and “engine” means only T-Time’s own output shows it. Your marks stay in this page until you copy or send them.</p>
+  </section>
+
+  <section class="paper" aria-labelledby="list-h">
+    <h2 id="list-h">Catalogue</h2>
+    <label class="label field" for="filter">Filter
+      <input type="search" id="filter" placeholder="Search label, EWTS or code point">
+    </label>
+    <p class="hint" id="count" role="status"></p>
+    <div style="overflow-x:auto">
+    <table class="data" id="table">
+      <thead><tr><th scope="col">Mark</th><th scope="col">Label</th><th scope="col">EWTS</th><th scope="col">Code points</th><th scope="col">Category</th><th scope="col">Evidence</th><th scope="col">Your verdict</th><th scope="col">Note</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="paper" aria-labelledby="send-h">
+    <h2 id="send-h">Send the review</h2>
+    <label class="label field" for="missing">Missing marks or letters
+      <textarea id="missing" rows="3" placeholder="For example: a mark you use that is not listed"></textarea>
+    </label>
+    <label class="label field" for="reviewer">Your name or initials (optional)
+      <input type="text" id="reviewer">
+    </label>
+    <p class="actions-row">
+      <button type="button" id="copy-review">Copy review</button>
+      <a class="button" id="gh-issue" href="https://github.com/ttime-ime/playground/issues/new" target="_blank" rel="noopener">Open as GitHub issue</a>
+    </p>
+    <p class="hint">Only entries you marked or noted are included. Nothing is sent unless you press a button.</p>
+    <pre class="report" id="review" aria-label="Review text"></pre>
+    <p class="hint" id="status" role="status"></p>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p><strong>Experimental prototype.</strong> The catalogue is a draft. Nothing you mark here is sent to any server.</p>
+  <details>
+    <summary>Build information</summary>
+    <p class="hint">Include this in bug reports.</p>
+    <p class="build" id="build">loading…</p>
+  </details>
+  <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
+</div></footer>
+<script type="module" src="symbols.js"></script>
+</body>
+</html>
