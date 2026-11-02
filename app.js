@@ -1,4 +1,5 @@
 import init, { Session, version } from "./pkg/ttime_wasm.js";
+import { initPalette } from "./palette.js";
 
 const $ = (id) => document.getElementById(id);
 const editor = $("editor");
@@ -120,6 +121,25 @@ function newSession(precomposed, keepFrom) {
   return s;
 }
 
+// Takes whatever the browser left in the editor as the committed text.
+function adoptEditorText() {
+  session.set_committed(editor.value);
+  typed = null;
+  prov = "";
+  inspect();
+}
+
+// Inserts at the caret (or over the selection) as an ordinary edit: a pending
+// run is fixed first, and the result becomes committed text.
+function insertAtCaret(text) {
+  commitProvisional();
+  const start = editor.selectionStart;
+  const end = editor.selectionEnd;
+  editor.setRangeText(text, start, end, "end");
+  adoptEditorText();
+  editor.focus();
+}
+
 function bind() {
   editor.addEventListener("beforeinput", (e) => {
     if (!$("ewts-on").checked || e.isComposing) return;
@@ -152,13 +172,7 @@ function bind() {
     }
   });
 
-  editor.addEventListener("input", () => {
-    // Only reached for edits the browser performed itself.
-    session.set_committed(editor.value);
-    typed = null;
-    prov = "";
-    inspect();
-  });
+  editor.addEventListener("input", adoptEditorText);
   editor.addEventListener("pointerdown", () => commitProvisional());
   editor.addEventListener("blur", () => commitProvisional());
 
@@ -245,6 +259,28 @@ $("build").textContent = version();
 session = new Session(false);
 buildExamples();
 bind();
+initPalette({
+  toggle: $("palette-toggle"),
+  panel: $("palette"),
+  closeButton: $("palette-close"),
+  input: $("pal-search"),
+  cats: $("pal-cats"),
+  count: $("pal-count"),
+  list: $("pal-list"),
+  insert: (s) => {
+    insertAtCaret(s.text);
+    setStatus(`Inserted ${s.label}`);
+  },
+  copy: async (s) => {
+    try {
+      await navigator.clipboard.writeText(s.text);
+      setStatus(`Copied ${s.label}`);
+    } catch {
+      setStatus("Clipboard blocked: use Insert instead");
+    }
+  },
+  focusEditor: () => editor.focus(),
+});
 render();
 editor.focus();
 window.__ttime = { get session() { return session; } };

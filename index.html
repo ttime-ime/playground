@@ -43,6 +43,7 @@
           <option value="system">System Tibetan font</option>
         </select>
       </label>
+      <button type="button" id="palette-toggle" class="quiet" aria-expanded="false" aria-controls="palette">Symbols</button>
       <div class="actions">
         <span id="status" class="status" role="status" aria-live="polite"></span>
         <button type="button" id="clear" class="quiet">Clear</button>
@@ -53,6 +54,19 @@
       aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
   </section>
   <p id="limits" class="hint"><strong>Limits.</strong> EWTS typing works at the end of the text. If you move the cursor into earlier text, typing there is ordinary browser editing. Backspace removes the last typed letter of the highlighted run, then behaves normally. Phone keyboards that use composition may bypass EWTS typing. This is not an IME, and has no dictionary or suggestions.</p>
+
+  <section id="palette" class="paper palette" aria-labelledby="pal-h" hidden>
+    <div class="palette-head">
+      <h2 id="pal-h">Symbols</h2>
+      <button type="button" id="palette-close" class="quiet">Close</button>
+    </div>
+    <p class="hint"><strong>Draft catalogue.</strong> The sequences are checked against the engine; the labels have not been reviewed by a Tibetologist. Choose a symbol to insert it where the cursor is, or copy it.</p>
+    <label class="label" for="pal-search">Search by name, code point (0F0D), EWTS or the character itself</label>
+    <input type="search" id="pal-search" autocomplete="off" spellcheck="false">
+    <div id="pal-cats" class="chips" role="group" aria-label="Category"></div>
+    <p id="pal-count" class="hint" role="status" aria-live="polite"></p>
+    <ul id="pal-list" class="sym-grid"></ul>
+  </section>
 
   <h2>Examples</h2>
   <p class="hint">Each button replaces the text with a sample. The last group shows unsettled questions that a specialist should judge.</p>

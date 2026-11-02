@@ -26,6 +26,16 @@ To refresh: from `ttime`, run `scripts/build-web.sh` (writes into `../playground
 
 Run locally: `python3 -m http.server 8000`, then open http://localhost:8000.
 
+## Symbol palette
+
+The Writing Room has a **Symbols** button that opens a searchable palette
+(`palette.js`) of Tibetan punctuation, marks and Sanskrit letters. Search by name,
+code point, EWTS or the character; filter by category; **Insert** puts the symbol at the
+caret (a pending EWTS run is fixed first) and **Copy** puts it on the clipboard.
+The catalogue and the search live in the Rust core (`ttime-core`, `data/symbols.tsv`)
+and arrive through the Wasm package. It is a draft: sequences are checked against the engine,
+labels are not reviewed by a Tibetologist.
+
 ## Writing Room behaviour and limits
 
 - Typed text is provisional (highlighted) until space or Enter. A space inside

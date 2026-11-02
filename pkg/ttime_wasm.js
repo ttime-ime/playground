@@ -187,6 +187,44 @@ export function reverse_json(input) {
 }
 
 /**
+ * The symbol catalogue entries matching `query` (all of them when empty), as a
+ * JSON array in display order. Search lives in `ttime-core`.
+ * @param {string} query
+ * @returns {string}
+ */
+export function search_symbols_json(query) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(query, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.search_symbols_json(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * Category names in order of first appearance, as a JSON array.
+ * @returns {string}
+ */
+export function symbol_categories_json() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.symbol_categories_json();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
  * Identifies the build in reports. `TTIME_GIT_SHA` is set by the build script.
  * @returns {string}
  */
