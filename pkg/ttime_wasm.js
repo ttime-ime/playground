@@ -89,6 +89,13 @@ export class Session {
         wasm.session_insert_text(this.__wbg_ptr, ptr0, len0);
     }
     /**
+     * @returns {boolean}
+     */
+    latin() {
+        const ret = wasm.session_latin(this.__wbg_ptr);
+        return ret !== 0;
+    }
+    /**
      * @param {boolean} precomposed
      * @param {boolean | null} [diplomatic]
      */
@@ -148,6 +155,14 @@ export class Session {
         const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
         wasm.session_set_committed(this.__wbg_ptr, ptr0, len0);
+    }
+    /**
+     * Latin mode passes typed text through unchanged; switching fixes the
+     * pending run first, so nothing is lost.
+     * @param {boolean} on
+     */
+    set_latin(on) {
+        wasm.session_set_latin(this.__wbg_ptr, on);
     }
 }
 if (Symbol.dispose) Session.prototype[Symbol.dispose] = Session.prototype.free;

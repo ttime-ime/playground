@@ -328,3 +328,7 @@ a.button:hover { border-color: var(--coral); }
 .tabpanel[hidden] { display: none; }
 .tabpanel > :first-child { margin-top: 0; }
 @media (max-width: 520px) { .tab { padding: 0 var(--s3); } }
+
+/* Latin mode: the editor looks different so the state is never in doubt. */
+.writing.latin { font-family: var(--sans), var(--tib); font-size: 1.125rem; border-left: 3px solid var(--turquoise); }
+kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-2); }

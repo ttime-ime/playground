@@ -120,6 +120,7 @@ function report() {
     `Browser: ${navigator.userAgent}`,
     `Precomposed output: ${session.precomposed()}`,
     `Diplomatic mode: ${session.diplomatic()}`,
+    `Latin mode: ${session.latin()}`,
   ];
   if (include) {
     lines.push(`EWTS typed: ${typed === null ? "(not available: text was edited directly)" : JSON.stringify(typed)}`);
@@ -160,11 +161,22 @@ function initTabs() {
 }
 
 function showModes() {
-  const modes = { diplomatic: session.diplomatic(), form: session.precomposed() };
+  const modes = { latin: session.latin(), diplomatic: session.diplomatic(), form: session.precomposed() };
   for (const [k, on] of Object.entries(modes)) {
     $(`tab-${k}`).classList.toggle("on", on);
     $(`on-${k}`).textContent = on ? " (on)" : "";
   }
+  $("lat-state").hidden = !session.latin();
+  $("latin").checked = session.latin();
+  editor.classList.toggle("latin", session.latin());
+  editor.lang = session.latin() ? "en" : "bo";
+}
+
+function setLatin(on) {
+  session.set_latin(on);
+  showModes();
+  render();
+  setStatus(on ? "Latin mode: typing is not converted" : "Tibetan mode: EWTS typing");
 }
 
 function newSession(precomposed, diplomatic, keepFrom) {
@@ -172,6 +184,7 @@ function newSession(precomposed, diplomatic, keepFrom) {
   if (keepFrom) {
     s.set_committed(keepFrom.committed());
     s.insert_text(keepFrom.raw());
+    s.set_latin(keepFrom.latin());
     keepFrom.free();
   }
   return s;
@@ -251,6 +264,17 @@ function bind() {
     session = newSession(e.target.checked, session.diplomatic(), session);
     showModes();
     render();
+  });
+  $("latin").addEventListener("change", (e) => {
+    setLatin(e.target.checked);
+    editor.focus();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey && e.code === "KeyL") {
+      e.preventDefault();
+      setLatin(!session.latin());
+      editor.focus();
+    }
   });
   $("diplomatic").addEventListener("change", (e) => {
     session = newSession(session.precomposed(), e.target.checked, session);

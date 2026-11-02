@@ -37,6 +37,7 @@
     <h2 id="ed-h" class="visually-hidden">Editor</h2>
     <div class="toolbar">
       <label class="check"><input type="checkbox" id="ewts-on" checked> EWTS typing</label>
+      <span id="lat-state" class="badge" hidden role="status">Latin</span>
       <span id="dip-state" class="badge" hidden role="status"></span>
       <label class="label field" for="font">Font
         <select id="font">
@@ -54,11 +55,16 @@
     <textarea id="editor" class="tib writing" lang="bo" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
       aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
     <div class="tabs" role="tablist" aria-label="Tools">
-      <button type="button" role="tab" id="tab-symbols" class="tab" aria-selected="false" aria-controls="panel-symbols" tabindex="0">Symbols</button>
+      <button type="button" role="tab" id="tab-latin" class="tab" aria-selected="false" aria-controls="panel-latin" tabindex="0">Latin<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-latin></span></button>
+      <button type="button" role="tab" id="tab-symbols" class="tab" aria-selected="false" aria-controls="panel-symbols" tabindex="-1">Symbols</button>
       <button type="button" role="tab" id="tab-inspector" class="tab" aria-selected="false" aria-controls="panel-inspector" tabindex="-1">Inspector</button>
       <button type="button" role="tab" id="tab-diplomatic" class="tab" aria-selected="false" aria-controls="panel-diplomatic" tabindex="-1">Diplomatic<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-diplomatic></span></button>
       <button type="button" role="tab" id="tab-form" class="tab" aria-selected="false" aria-controls="panel-form" tabindex="-1">Output form<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-form></span></button>
       <button type="button" role="tab" id="tab-report" class="tab" aria-selected="false" aria-controls="panel-report" tabindex="-1">Report a problem</button>
+    </div>
+    <div role="tabpanel" id="panel-latin" class="tabpanel" aria-labelledby="tab-latin" hidden>
+      <label class="check"><input type="checkbox" id="latin"> Latin mode</label>
+      <p class="hint">Type ordinary Latin text in the middle of Tibetan: nothing is converted and the space bar is a space. Switch with <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> while the page is focused. Switching on fixes the highlighted Tibetan first, so nothing typed is lost; switching off starts a fresh Tibetan run. This is a first version for testing: the shortcut and the switching rule are open questions, so tell us what works for you.</p>
     </div>
     <div role="tabpanel" id="panel-symbols" class="tabpanel" aria-labelledby="tab-symbols" hidden>
     <p class="hint"><strong>Draft catalogue.</strong> The sequences are checked against the engine; the labels have not been reviewed by a Tibetologist. Choose a symbol to insert it where the cursor is, or copy it. Reviewing the labels? <a href="symbols.html">Open the review page</a>.</p>

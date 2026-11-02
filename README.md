@@ -28,7 +28,7 @@ Run locally: `python3 -m http.server 8000`, then open http://localhost:8000.
 
 ## Tool tabs and the symbol palette
 
-The tools sit in tabs directly under the editor: Symbols, Inspector, Diplomatic, Output form and Report a problem. Selecting a tab opens its panel; selecting it again closes it. Everything updates live while you type. Modes (Diplomatic, Output form) stay on when their panel is closed, and their tab shows a dot. New tools for testing are added as tabs.
+The tools sit in tabs directly under the editor: Latin, Symbols, Inspector, Diplomatic, Output form and Report a problem. Selecting a tab opens its panel; selecting it again closes it. Everything updates live while you type. Modes (Latin, Diplomatic, Output form) stay on when their panel is closed, and their tab shows a dot. New tools for testing are added as tabs.
 
 
 The Writing Room has a **Symbols** tab, under the editor, that opens a searchable palette
