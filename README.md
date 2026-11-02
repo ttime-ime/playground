@@ -54,6 +54,10 @@ by hand there; copy buttons by a real click; light and dark, desktop and 375px m
 **Not checked:** Safari, Firefox, Windows, Linux, phone keyboards, screen readers,
 other fonts, deployment.
 
+## Reporting problems
+
+Both tools have a "Report a problem" section. It builds a text report in the page (version, browser, text, code points, what you expected). "Copy report" puts it on the clipboard; "Report on GitHub" opens a pre-filled new issue on this repository, which the reporter reviews and submits themselves. Nothing is sent by the page. Issues are public, and the report text is truncated to 6000 characters in the link.
+
 ## Privacy
 
 Conversion runs in the browser; nothing is sent. Feedback reports are built

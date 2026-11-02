@@ -271,3 +271,13 @@ table.data td.num { font-variant-numeric: tabular-nums; }
 }
 
 textarea::placeholder { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: var(--muted); opacity: 0.8; }
+
+/* ---------- Report actions ---------- */
+.actions-row { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; }
+a.button {
+  display: inline-flex; align-items: center; font-size: 0.875rem; font-weight: 500; min-height: 36px;
+  padding: 0 var(--s4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  color: var(--text); text-decoration: none;
+}
+a.button:hover { border-color: var(--coral); }
+@media (max-width: 420px) { a.button { min-height: 44px; } }

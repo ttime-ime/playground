@@ -75,6 +75,12 @@ function update() {
   report();
 }
 
+function issueUrl(title, body) {
+  const max = 6000; // keep the URL within what GitHub accepts
+  const text = body.length > max ? body.slice(0, max) + "\n…(truncated; use Copy report for the full text)" : body;
+  return "https://github.com/ttime-ime/playground/issues/new?" + new URLSearchParams({ title, body: text });
+}
+
 function report() {
   const lines = ["T-Time Converter report", `Version: ${version()}`, `Browser: ${navigator.userAgent}`, `Precomposed output: ${precomposed}`, `Last edited: ${last}`];
   if ($("include-text").checked) {
@@ -82,6 +88,7 @@ function report() {
   } else lines.push("(text omitted by the sender)");
   lines.push(`Fidelity: ${$("r-fid").textContent}`, `Round trip: ${$("r-rt").textContent}`, `Expected: ${$("expected").value || "(not given)"}`);
   $("report").textContent = lines.join("\n");
+  $("gh-issue").href = issueUrl("Converter: ", $("report").textContent);
 }
 
 async function copy(text, ok) {

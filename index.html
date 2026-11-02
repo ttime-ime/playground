@@ -86,12 +86,15 @@
   <details class="paper" id="report-box">
     <summary>Report a problem</summary>
     <div class="disclosure-body">
-      <p class="hint">Nothing is sent anywhere. Fill in what you expected, review the text, then copy it into an email or a note.</p>
+      <p class="hint">Nothing is sent from this page. Review the text, then either copy it or open a pre-filled issue on GitHub, where you will see it before you submit. Issues on this repository are public, so untick the text box below if the text is private.</p>
       <label class="formrow">What you expected <textarea id="expected" rows="2" placeholder="Expected Tibetan or EWTS"></textarea></label>
       <label class="formrow">Comment <textarea id="comment" rows="2"></textarea></label>
       <label class="check"><input type="checkbox" id="include-text" checked> Include the editor text in the report</label>
       <pre class="report" id="report" aria-label="Report preview"></pre>
-      <button type="button" id="copy-report">Copy report</button>
+      <div class="actions-row">
+        <button type="button" id="copy-report">Copy report</button>
+        <a class="button" id="gh-issue" href="https://github.com/ttime-ime/playground/issues/new" target="_blank" rel="noopener">Report on GitHub</a>
+      </div>
     </div>
   </details>
 </main>

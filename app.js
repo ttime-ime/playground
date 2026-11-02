@@ -83,6 +83,12 @@ function inspect() {
   report();
 }
 
+function issueUrl(title, body) {
+  const max = 6000; // keep the URL within what GitHub accepts
+  const text = body.length > max ? body.slice(0, max) + "\n…(truncated; use Copy report for the full text)" : body;
+  return "https://github.com/ttime-ime/playground/issues/new?" + new URLSearchParams({ title, body: text });
+}
+
 function report() {
   const include = $("include-text").checked;
   const lines = [
@@ -101,6 +107,7 @@ function report() {
   lines.push(`Expected: ${$("expected").value || "(not given)"}`);
   lines.push(`Comment: ${$("comment").value || "(none)"}`);
   $("report").textContent = lines.join("\n");
+  $("gh-issue").href = issueUrl("Writing Room: ", $("report").textContent);
 }
 
 function newSession(precomposed, keepFrom) {
