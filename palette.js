@@ -1,4 +1,4 @@
-import { search_symbols_json, symbol_categories_json } from "./pkg/ttime_wasm.js";
+import { search_symbols_json, symbol_categories_json } from "./pkg/ttime_wasm.js?v=39a9b0142b";
 
 // Searchable symbol palette. The catalogue and the search live in the Rust core;
 // this file only draws results and reports which symbol was chosen.

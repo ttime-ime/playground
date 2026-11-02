@@ -77,3 +77,13 @@ Both tools have a "Report a problem" section. It builds a text report in the pag
 Conversion runs in the browser; nothing is sent. Feedback reports are built
 locally and copied by the user. A hosting provider may keep ordinary access logs.
 The page is public to anyone with the link once deployed.
+
+## Cache-busting
+
+Every reference to a script, stylesheet, image, font or Wasm file carries `?v=` and a hash of that file's content, so browsers fetch a file again exactly when it changed and a page never mixes old and new scripts. After changing any file here, run
+
+```sh
+python3 -I stamp.py
+```
+
+and commit the result. `python3 -I stamp.py --check` changes nothing and exits 1 if a reference is stale. `ttime/scripts/build-web.sh` runs the stamp after rebuilding `pkg/`. The test fixtures are fetched with `cache: "no-cache"` instead.

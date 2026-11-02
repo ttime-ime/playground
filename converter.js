@@ -1,4 +1,4 @@
-import init, { convert_json, reverse_json, version } from "./pkg/ttime_wasm.js";
+import init, { convert_json, reverse_json, version } from "./pkg/ttime_wasm.js?v=39a9b0142b";
 
 const $ = (id) => document.getElementById(id);
 const enc = new TextEncoder(), dec = new TextDecoder();
@@ -95,7 +95,7 @@ async function copy(text, ok) {
   try { await navigator.clipboard.writeText(text); setStatus(ok); } catch { setStatus("Select the text and copy it"); }
 }
 
-await init();
+await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=4836333691", import.meta.url) });
 $("build").textContent = version();
 $("ewts").addEventListener("input", () => { last = "ewts"; update(); });
 $("uni").addEventListener("input", () => { last = "uni"; update(); });

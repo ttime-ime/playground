@@ -1,5 +1,5 @@
-import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js";
-import { initPalette } from "./palette.js";
+import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=39a9b0142b";
+import { initPalette } from "./palette.js?v=3984af5369";
 
 const $ = (id) => document.getElementById(id);
 const editor = $("editor");
@@ -341,7 +341,7 @@ function buildExamples() {
   }
 }
 
-await init();
+await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=4836333691", import.meta.url) });
 $("build").textContent = version();
 session = new Session(false, false);
 buildExamples();
