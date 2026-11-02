@@ -149,6 +149,10 @@ h3 { font-size: 1.125rem; }
 .paper {
   background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
 }
+.evaluation > .paper { padding: var(--s4) var(--s5); margin-top: var(--s3); }
+.evaluation > .paper h2:first-child { margin-top: 0; }
+.evaluation > nav.paper { padding-top: var(--s3); padding-bottom: var(--s3); }
+.evaluation > nav.paper .actions-row { margin: 0; }
 button, select, textarea, input { font: inherit; color: inherit; }
 button {
   font-size: 0.875rem; font-weight: 500; min-height: 36px; padding: 0 var(--s4);
