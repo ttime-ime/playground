@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-Time Converter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>T-Time <span class="sub">Converter</span></h1>
+  <nav><a href="index.html">Writing Room</a> · <a href="converter.html" aria-current="page">Converter</a> · <a href="parity.html">Parity check</a></nav>
+  <p class="build" id="build">loading…</p>
+</header>
+
+<main>
+  <p class="hint">Tests <strong>conversion correctness</strong>, not typing. Edit either box; the other updates. The Writing Room tests the typing experience; the two are different things.</p>
+  <div class="two">
+    <section>
+      <h2>EWTS</h2>
+      <textarea id="ewts" rows="8" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="EWTS text"></textarea>
+    </section>
+    <section>
+      <h2>Tibetan Unicode</h2>
+      <textarea id="uni" rows="8" lang="bo" spellcheck="false" aria-label="Tibetan Unicode text" class="tib"></textarea>
+    </section>
+  </div>
+  <div class="controls">
+    <label><input type="checkbox" id="precomposed"> Precomposed output (not NFC)</label>
+    <button id="copy-uni">Copy Unicode</button>
+    <button id="copy-ewts">Copy EWTS</button>
+    <button id="clear">Clear</button>
+    <span id="status" role="status"></span>
+  </div>
+
+  <details open>
+    <summary>Result and diagnostics</summary>
+    <dl>
+      <dt>Last edited</dt><dd id="r-dir"></dd>
+      <dt>Reverse fidelity</dt><dd id="r-fid"></dd>
+      <dt>Round trip</dt><dd id="r-rt"></dd>
+      <dt>Unicode code points</dt><dd><code id="r-cp"></code></dd>
+      <dt>Normalization</dt><dd id="r-nf"></dd>
+      <dt>Diagnostics</dt><dd><ul id="r-diag"></ul></dd>
+    </dl>
+    <p class="hint">Fidelity: <strong>Exact</strong> means converting the EWTS back gives your Unicode unchanged; <strong>Canonical</strong> means equal after canonical normalization; <strong>Lossy</strong> means some characters have no EWTS spelling and appear as <code>\uXXXX</code> escapes. A round trip that differs is a finding worth reporting.</p>
+  </details>
+
+  <details id="report-box">
+    <summary>Report a problem</summary>
+    <p class="hint">Nothing is sent anywhere. Review the text, then copy it into an email or note.</p>
+    <label>What you expected <textarea id="expected" rows="2"></textarea></label>
+    <label><input type="checkbox" id="include-text" checked> Include both boxes in the report</label>
+    <pre id="report" aria-label="Report preview"></pre>
+    <button id="copy-report">Copy report</button>
+  </details>
+</main>
+
+<footer>
+  <p><strong>Experimental.</strong> Conversion runs in your browser; text is not sent to any server. The host may keep ordinary access logs. The page is public to anyone with the link.</p>
+</footer>
+<script type="module" src="converter.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+alphabet.tsv
+corpus.tsv
+deviations.tsv
+precomposed.tsv
+punctuation.tsv
+robustness.tsv
+sanskrit.tsv
+stacks.tsv
+syllables.tsv
+thl_rules.tsv
+words.tsv
