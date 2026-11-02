@@ -1,5 +1,5 @@
-import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=39a9b0142b";
-import { initPalette } from "./palette.js?v=3984af5369";
+import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=e360af5557";
+import { initPalette } from "./palette.js?v=2bb9bbcb87";
 
 const $ = (id) => document.getElementById(id);
 const editor = $("editor");
@@ -121,6 +121,7 @@ function report() {
     `Precomposed output: ${session.precomposed()}`,
     `Diplomatic mode: ${session.diplomatic()}`,
     `Latin mode: ${session.latin()}`,
+    `Dead keys in Latin mode: ${session.dead_keys()}`,
   ];
   if (include) {
     lines.push(`EWTS typed: ${typed === null ? "(not available: text was edited directly)" : JSON.stringify(typed)}`);
@@ -185,6 +186,7 @@ function newSession(precomposed, diplomatic, keepFrom) {
     s.set_committed(keepFrom.committed());
     s.insert_text(keepFrom.raw());
     s.set_latin(keepFrom.latin());
+    s.set_dead_keys(keepFrom.dead_keys());
     keepFrom.free();
   }
   return s;
@@ -276,6 +278,12 @@ function bind() {
       editor.focus();
     }
   });
+  $("dead-keys").addEventListener("change", (e) => {
+    session.set_dead_keys(e.target.checked);
+    setStatus(e.target.checked ? "Dead keys on: ; or : then a letter, in Latin mode" : "Dead keys off");
+    render();
+    editor.focus();
+  });
   $("diplomatic").addEventListener("change", (e) => {
     session = newSession(session.precomposed(), e.target.checked, session);
     showModes();
@@ -341,9 +349,10 @@ function buildExamples() {
   }
 }
 
-await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=4836333691", import.meta.url) });
+await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=b9ce97e75e", import.meta.url) });
 $("build").textContent = version();
 session = new Session(false, false);
+session.set_dead_keys(true);
 buildExamples();
 bind();
 initTabs();

@@ -1,4 +1,4 @@
-import init, { version } from "./pkg/ttime_wasm.js?v=39a9b0142b";
+import init, { version } from "./pkg/ttime_wasm.js?v=e360af5557";
 
 const $ = (id) => document.getElementById(id);
 $("copy-log").addEventListener("click", async () => {
@@ -11,5 +11,5 @@ $("copy-log").addEventListener("click", async () => {
   }
   setTimeout(() => ($("status").textContent = ""), 2500);
 });
-await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=4836333691", import.meta.url) });
+await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=b9ce97e75e", import.meta.url) });
 $("build").textContent = version();

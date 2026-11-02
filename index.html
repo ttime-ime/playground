@@ -7,7 +7,7 @@
 <title>T-Time Writing Room</title>
 <link rel="icon" href="assets/logo-square.svg?v=d8e3add972" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2?v=609628d82b" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=30825adc74">
+<link rel="stylesheet" href="style.css?v=64b1042175">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -65,6 +65,32 @@
     <div role="tabpanel" id="panel-latin" class="tabpanel" aria-labelledby="tab-latin" hidden>
       <label class="check"><input type="checkbox" id="latin"> Latin mode</label>
       <p class="hint">Type ordinary Latin text in the middle of Tibetan: nothing is converted and the space bar is a space. Switch with <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> while the page is focused. Switching on fixes the highlighted Tibetan first, so nothing typed is lost; switching off starts a fresh Tibetan run. This is a first version for testing: the shortcut and the switching rule are open questions, so tell us what works for you.</p>
+      <label class="check"><input type="checkbox" id="dead-keys" checked> Diacritic dead keys</label>
+      <p class="hint">In Latin mode, type <kbd>;</kbd> and then a key for an IAST letter, or <kbd>:</kbd> and then the key for the capital. A <kbd>;</kbd> or <kbd>:</kbd> not followed by one of these keys stays as typed, so ordinary punctuation is unaffected; type it twice for a single literal one before a letter. Backspace removes a waiting <kbd>;</kbd> or <kbd>:</kbd>. Which keys feel natural, and whether <kbd>;</kbd> and <kbd>:</kbd> get in your way, are what we want to learn.</p>
+      <details class="deadkeys" open>
+        <summary>Dead-key shortcuts</summary>
+        <table class="data">
+          <thead><tr><th>Second key</th><th>Lower case</th><th>Capital</th></tr></thead>
+          <tbody>
+          <tr><td><kbd>a</kbd></td><td lang="en"><kbd>;a</kbd> ā</td><td lang="en"><kbd>:a</kbd> Ā</td></tr>
+          <tr><td><kbd>i</kbd></td><td lang="en"><kbd>;i</kbd> ī</td><td lang="en"><kbd>:i</kbd> Ī</td></tr>
+          <tr><td><kbd>u</kbd></td><td lang="en"><kbd>;u</kbd> ū</td><td lang="en"><kbd>:u</kbd> Ū</td></tr>
+          <tr><td><kbd>r</kbd></td><td lang="en"><kbd>;r</kbd> ṛ</td><td lang="en"><kbd>:r</kbd> Ṛ</td></tr>
+          <tr><td><kbd>R</kbd></td><td lang="en"><kbd>;R</kbd> ṝ</td><td lang="en"><kbd>:R</kbd> Ṝ</td></tr>
+          <tr><td><kbd>l</kbd></td><td lang="en"><kbd>;l</kbd> ḷ</td><td lang="en"><kbd>:l</kbd> Ḷ</td></tr>
+          <tr><td><kbd>L</kbd></td><td lang="en"><kbd>;L</kbd> ḹ</td><td lang="en"><kbd>:L</kbd> Ḹ</td></tr>
+          <tr><td><kbd>m</kbd></td><td lang="en"><kbd>;m</kbd> ṃ</td><td lang="en"><kbd>:m</kbd> Ṃ</td></tr>
+          <tr><td><kbd>h</kbd></td><td lang="en"><kbd>;h</kbd> ḥ</td><td lang="en"><kbd>:h</kbd> Ḥ</td></tr>
+          <tr><td><kbd>n</kbd></td><td lang="en"><kbd>;n</kbd> ṅ</td><td lang="en"><kbd>:n</kbd> Ṅ</td></tr>
+          <tr><td><kbd>N</kbd></td><td lang="en"><kbd>;N</kbd> ṇ</td><td lang="en"><kbd>:N</kbd> Ṇ</td></tr>
+          <tr><td><kbd>y</kbd></td><td lang="en"><kbd>;y</kbd> ñ</td><td lang="en"><kbd>:y</kbd> Ñ</td></tr>
+          <tr><td><kbd>t</kbd></td><td lang="en"><kbd>;t</kbd> ṭ</td><td lang="en"><kbd>:t</kbd> Ṭ</td></tr>
+          <tr><td><kbd>d</kbd></td><td lang="en"><kbd>;d</kbd> ḍ</td><td lang="en"><kbd>:d</kbd> Ḍ</td></tr>
+          <tr><td><kbd>s</kbd></td><td lang="en"><kbd>;s</kbd> ś</td><td lang="en"><kbd>:s</kbd> Ś</td></tr>
+          <tr><td><kbd>S</kbd></td><td lang="en"><kbd>;S</kbd> ṣ</td><td lang="en"><kbd>:S</kbd> Ṣ</td></tr>
+          </tbody>
+        </table>
+      </details>
     </div>
     <div role="tabpanel" id="panel-symbols" class="tabpanel" aria-labelledby="tab-symbols" hidden>
     <p class="hint"><strong>Draft catalogue.</strong> The sequences are checked against the engine; the labels have not been reviewed by a Tibetologist. Choose a symbol to insert it where the cursor is, or copy it. Reviewing the labels? <a href="symbols.html">Open the review page</a>.</p>
@@ -122,6 +148,6 @@
   <p><a href="evaluate.html">Evaluation kit</a> for testing sessions with a specialist.</p>
   <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
 </div></footer>
-<script type="module" src="app.js?v=b179af394a"></script>
+<script type="module" src="app.js?v=31a625e51c"></script>
 </body>
 </html>

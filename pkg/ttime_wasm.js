@@ -40,6 +40,13 @@ export class Session {
         }
     }
     /**
+     * @returns {boolean}
+     */
+    dead_keys() {
+        const ret = wasm.session_dead_keys(this.__wbg_ptr);
+        return ret !== 0;
+    }
+    /**
      * Diagnostics for the provisional run only; spans are UTF-8 byte offsets
      * into [`Session::raw`].
      * @returns {string}
@@ -155,6 +162,14 @@ export class Session {
         const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
         wasm.session_set_committed(this.__wbg_ptr, ptr0, len0);
+    }
+    /**
+     * Dead keys for the IAST letters in Latin mode: `;` then a key gives the
+     * lower-case letter, `:` then a key gives the capital.
+     * @param {boolean} on
+     */
+    set_dead_keys(on) {
+        wasm.session_set_dead_keys(this.__wbg_ptr, on);
     }
     /**
      * Latin mode passes typed text through unchanged; switching fixes the

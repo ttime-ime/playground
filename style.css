@@ -332,3 +332,8 @@ a.button:hover { border-color: var(--coral); }
 /* Latin mode: the editor looks different so the state is never in doubt. */
 .writing.latin { font-family: var(--sans), var(--tib); font-size: 1.125rem; border-left: 3px solid var(--turquoise); }
 kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-2); }
+
+.deadkeys { margin: var(--s2) 0; }
+.deadkeys summary { cursor: pointer; font-weight: 600; margin-bottom: var(--s2); }
+.deadkeys table.data { max-width: 28rem; }
+.deadkeys table.data th, .deadkeys table.data td { padding: 2px var(--s3); }
