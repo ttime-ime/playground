@@ -52,7 +52,7 @@ Visual design only; the engine, fixtures and conversion behaviour are untouched.
 Colour and type tokens live at the top of `style.css`, light and dark via
 `prefers-color-scheme`. Motion respects `prefers-reduced-motion`.
 
-- `assets/logo-long.svg` (wide lockup, used in the header in both themes) and `assets/logo-square.svg` (icon, used as the favicon): supplied logos, unmodified.
+- `assets/logo-long.svg` (wide lockup, used in the header in light mode), `assets/logo-long-dark.svg` (the same lockup for dark mode) and `assets/logo-square.svg` (icon, used as the favicon): supplied logos, unmodified.
 - `assets/typing.webp`: the supplied `typing.png`, trimmed and resized, converted to WebP. Project artwork, not under the code licence.
 - `assets/fonts/`: Newsreader (roman and italic) and Noto Serif Tibetan, woff2 conversions (subsetting is permitted for these two), under the SIL OFL 1.1 (texts alongside; neither font declares a reserved name). Source Sans 3 and Jomolhari were not bundled because their reserved font names forbid modified or subset versions. Sans and mono use system stacks; Jomolhari is selectable in the Writing Room only if installed.
 
