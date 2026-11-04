@@ -337,3 +337,16 @@ kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 4px; backg
 .deadkeys summary { cursor: pointer; font-weight: 600; margin-bottom: var(--s2); }
 .deadkeys table.data { max-width: 28rem; }
 .deadkeys table.data th, .deadkeys table.data td { padding: 2px var(--s3); }
+
+.chart-row { display: grid; grid-template-columns: 8rem 1fr; gap: var(--s3); align-items: start; padding: var(--s2) 0; border-top: 1px solid var(--line-soft); }
+.chart-label { color: var(--muted); font-size: 0.875rem; padding-top: var(--s2); }
+.chart-cells { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 4.5rem; padding: var(--s2) var(--s3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); color: inherit; font: inherit; cursor: pointer; }
+.cell:hover, .cell:focus-visible { background: var(--surface-2); }
+.cell .glyph { font-size: 1.75rem; line-height: 1.6; }
+.cell code { font-size: 0.75rem; }
+.cell .hint { margin: 0; font-size: 0.75rem; }
+.cell.warn { background: var(--warn-bg); }
+@media (max-width: 40rem) { .chart-row { grid-template-columns: 1fr; gap: 0; } }
+.chart-notes { margin: var(--s3) 0 0; }
+.chart-notes summary { cursor: pointer; font-weight: 600; }

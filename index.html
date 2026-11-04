@@ -7,7 +7,7 @@
 <title>T-Time Writing Room</title>
 <link rel="icon" href="assets/logo-square.svg?v=d8e3add972" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2?v=609628d82b" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=64b1042175">
+<link rel="stylesheet" href="style.css?v=786d07096f">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -56,6 +56,7 @@
       aria-describedby="limits" placeholder="Type here, for example: bkra shis bde legs"></textarea>
     <div class="tabs" role="tablist" aria-label="Tools">
       <button type="button" role="tab" id="tab-latin" class="tab" aria-selected="false" aria-controls="panel-latin" tabindex="0">Latin<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-latin></span></button>
+      <button type="button" role="tab" id="tab-chart" class="tab" aria-selected="false" aria-controls="panel-chart" tabindex="-1">Chart</button>
       <button type="button" role="tab" id="tab-symbols" class="tab" aria-selected="false" aria-controls="panel-symbols" tabindex="-1">Symbols</button>
       <button type="button" role="tab" id="tab-inspector" class="tab" aria-selected="false" aria-controls="panel-inspector" tabindex="-1">Inspector</button>
       <button type="button" role="tab" id="tab-diplomatic" class="tab" aria-selected="false" aria-controls="panel-diplomatic" tabindex="-1">Diplomatic<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-diplomatic></span></button>
@@ -90,6 +91,21 @@
           <tr><td><kbd>S</kbd></td><td lang="en"><kbd>;S</kbd> ṣ</td><td lang="en"><kbd>:S</kbd> Ṣ</td></tr>
           </tbody>
         </table>
+      </details>
+    </div>
+    <div role="tabpanel" id="panel-chart" class="tabpanel" aria-labelledby="tab-chart" hidden>
+      <p class="hint"><strong>Draft chart.</strong> Choose a cell to insert its glyph where the cursor is; the EWTS under it is what you type. Each glyph is made by the engine from that EWTS. The groupings and IAST labels have not been reviewed by a Tibetologist.</p>
+      <div id="chart-cats" class="chips" role="group" aria-label="Chart section"></div>
+      <p id="chart-intro" class="hint"></p>
+      <div id="chart-body" role="group"></div>
+      <details class="chart-notes">
+        <summary>Notes on typing</summary>
+        <ul>
+          <li>A <kbd>+</kbd> joins letters into a stack when the engine would not stack them itself: <code>t+ta</code>, <code>k+Sha</code>. Longer stacks chain it: <code>s+t+ra</code>.</li>
+          <li>Capital letters are the Sanskrit forms: <code>Ta Tha Da Na Sha</code> are the inverted (retroflex) letters, <code>Ra</code> is the fixed-form ra.</li>
+          <li>Aspirates take <code>h</code> after the letter: <code>gha dha bha dzha Dha</code>. <code>jha</code> is not one of them: type <code>dzha</code> for ཛྷ.</li>
+          <li><code>va</code> and <code>fa</code> are ba and pha with a tsa-phru mark; a subjoined wa-zur is <code>wa</code>, as in <code>dh+wa</code>.</li>
+        </ul>
       </details>
     </div>
     <div role="tabpanel" id="panel-symbols" class="tabpanel" aria-labelledby="tab-symbols" hidden>
@@ -148,6 +164,6 @@
   <p><a href="evaluate.html">Evaluation kit</a> for testing sessions with a specialist.</p>
   <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
 </div></footer>
-<script type="module" src="app.js?v=31a625e51c"></script>
+<script type="module" src="app.js?v=e6cbf0b148"></script>
 </body>
 </html>
