@@ -1,5 +1,6 @@
 import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=e360af5557";
 import { initPalette } from "./palette.js?v=2bb9bbcb87";
+import { initChart } from "./chart.js?v=f06065f40e";
 
 const $ = (id) => document.getElementById(id);
 const editor = $("editor");
@@ -373,6 +374,16 @@ initPalette({
     } catch {
       setStatus("Clipboard blocked: use Insert instead");
     }
+  },
+  focusEditor: () => editor.focus(),
+});
+initChart({
+  cats: $("chart-cats"),
+  intro: $("chart-intro"),
+  body: $("chart-body"),
+  insert: (text, label) => {
+    insertAtCaret(text);
+    setStatus(`Inserted ${label}`);
   },
   focusEditor: () => editor.focus(),
 });
