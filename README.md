@@ -28,7 +28,7 @@ Run locally: `python3 -m http.server 8000`, then open http://localhost:8000.
 
 ## Tool tabs and the symbol palette
 
-The tools sit in tabs directly under the editor: Latin, Symbols, Inspector, Diplomatic, Output form and Report a problem. Selecting a tab opens its panel; selecting it again closes it. Everything updates live while you type. Modes (Latin, Diplomatic, Output form) stay on when their panel is closed, and their tab shows a dot. New tools for testing are added as tabs.
+The tools sit in tabs directly under the editor: Latin, Chart, Stacker, Symbols, Inspector, Diplomatic, Output form and Report a problem. Selecting a tab opens its panel; selecting it again closes it. Everything updates live while you type. Modes (Latin, Diplomatic, Output form) stay on when their panel is closed, and their tab shows a dot. New tools for testing are added as tabs.
 
 
 The Writing Room has a **Symbols** tab, under the editor, that opens a searchable palette
@@ -38,6 +38,13 @@ caret (a pending EWTS run is fixed first) and **Copy** puts it on the clipboard.
 The catalogue and the search live in the Rust core (`ttime-core`, `data/symbols.tsv`)
 and arrive through the Wasm package. It is a draft: sequences are checked against the engine,
 labels are not reviewed by a Tibetologist.
+
+The **Stacker** tab (`stacker.js`) builds one stack from clicked or typed letters, top to bottom,
+with an optional vowel and marks. It shows the Unicode, the full EWTS code, the *shortest* EWTS
+that gives the same stack (`r+g+ya` is `rgya`) and what the engine reports, and **Insert** puts the
+stack at the caret. Type a letter's EWTS in the box and press Enter or `+` to add it; Backspace on an
+empty box removes the last. The builder (`build_stack` in `ttime-core`) does all the work, so the
+result cannot disagree with typing. It is a draft: whether a font draws a given stack well is not checked.
 
 ## Writing Room behaviour and limits
 

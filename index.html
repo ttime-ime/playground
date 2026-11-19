@@ -7,7 +7,7 @@
 <title>T-Time Writing Room</title>
 <link rel="icon" href="assets/logo-square.svg?v=d8e3add972" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/NotoSerifTibetan.woff2?v=609628d82b" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=786d07096f">
+<link rel="stylesheet" href="style.css?v=8715d8c32c">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -57,6 +57,7 @@
     <div class="tabs" role="tablist" aria-label="Tools">
       <button type="button" role="tab" id="tab-latin" class="tab" aria-selected="false" aria-controls="panel-latin" tabindex="0">Latin<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-latin></span></button>
       <button type="button" role="tab" id="tab-chart" class="tab" aria-selected="false" aria-controls="panel-chart" tabindex="-1">Chart</button>
+      <button type="button" role="tab" id="tab-stacker" class="tab" aria-selected="false" aria-controls="panel-stacker" tabindex="-1">Stacker</button>
       <button type="button" role="tab" id="tab-symbols" class="tab" aria-selected="false" aria-controls="panel-symbols" tabindex="-1">Symbols</button>
       <button type="button" role="tab" id="tab-inspector" class="tab" aria-selected="false" aria-controls="panel-inspector" tabindex="-1">Inspector</button>
       <button type="button" role="tab" id="tab-diplomatic" class="tab" aria-selected="false" aria-controls="panel-diplomatic" tabindex="-1">Diplomatic<span class=dot aria-hidden=true></span><span class=visually-hidden id=on-diplomatic></span></button>
@@ -107,6 +108,44 @@
           <li><code>va</code> and <code>fa</code> are ba and pha with a tsa-phru mark; a subjoined wa-zur is <code>wa</code>, as in <code>dh+wa</code>.</li>
         </ul>
       </details>
+    </div>
+    <div role="tabpanel" id="panel-stacker" class="tabpanel stacker-panel" aria-labelledby="tab-stacker" hidden>
+      <div class="stacker-layout">
+      <div class="stacker-main">
+      <p class="hint"><strong>Draft stacker.</strong> Build one stack, top letter first, and see the code to type for it next time. Type a letter&rsquo;s EWTS in the box and press <kbd>Enter</kbd> or <kbd>+</kbd> to add it (<kbd>Backspace</kbd> on an empty box removes the last), or click a letter. The engine makes the stack, so the result matches typing. It reports, rather than refuses, unusual combinations; whether your font draws a stack well is a separate question.</p>
+      <div class="stacker-top">
+        <label class="label" for="st-key">Letter to add</label>
+        <input type="text" id="st-key" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="for example k, then Sh">
+        <div class="layers-line">
+          <span class="label">Stack, top to bottom</span>
+          <div id="st-layers" class="layers" role="list" aria-label="Letters in the stack"></div>
+          <span id="st-layers-empty" class="hint">No letters yet.</span>
+        </div>
+        <div id="st-presets" class="chips" role="group" aria-label="Start from an example"></div>
+      </div>
+      <div id="st-result" class="stacker-result" hidden>
+        <div class="st-glyph tib" id="st-preview" lang="bo" role="img" aria-label="The stack"></div>
+        <dl class="facts">
+          <dt>Type this</dt><dd><code id="st-shortest"></code> <span class="hint" id="st-same" hidden>(no shorter spelling gives this stack)</span></dd>
+          <dt>Full code</dt><dd><code id="st-canonical"></code></dd>
+          <dt>Code points</dt><dd><code id="st-cp"></code></dd>
+        </dl>
+        <div class="actions-row">
+          <button type="button" id="st-insert" class="primary">Insert at cursor</button>
+          <button type="button" id="st-copy">Copy stack</button>
+          <button type="button" id="st-copycode">Copy EWTS</button>
+          <button type="button" id="st-clear" class="quiet">Clear</button>
+        </div>
+        <p id="st-learn" class="hint" role="status" aria-live="polite"></p>
+        <ul class="diag" id="st-diag" aria-label="What the engine reports"></ul>
+      </div>
+      <h3 class="st-h">Vowel and marks</h3>
+      <div id="st-vowels" class="chips" role="group" aria-label="Vowel"></div>
+      <div id="st-marks" class="chips st-marks" role="group" aria-label="Marks"></div>
+      </div>
+      </div>
+      <h3 class="st-h">Letters</h3>
+      <div id="st-grid" role="group" aria-label="Letters to add"></div>
     </div>
     <div role="tabpanel" id="panel-symbols" class="tabpanel" aria-labelledby="tab-symbols" hidden>
     <p class="hint"><strong>Draft catalogue.</strong> The sequences are checked against the engine; the labels have not been reviewed by a Tibetologist. Choose a symbol to insert it where the cursor is, or copy it. Reviewing the labels? <a href="symbols.html">Open the review page</a>.</p>
@@ -164,6 +203,6 @@
   <p><a href="evaluate.html">Evaluation kit</a> for testing sessions with a specialist.</p>
   <p>Code under MIT or Apache-2.0. Typeset in Newsreader and Noto Serif Tibetan (SIL Open Font License).</p>
 </div></footer>
-<script type="module" src="app.js?v=e6cbf0b148"></script>
+<script type="module" src="app.js?v=fba801f4a0"></script>
 </body>
 </html>

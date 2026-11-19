@@ -1,6 +1,7 @@
-import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=e360af5557";
-import { initPalette } from "./palette.js?v=2bb9bbcb87";
-import { initChart } from "./chart.js?v=f06065f40e";
+import init, { Session, version, convert_json_with } from "./pkg/ttime_wasm.js?v=7787aafc88";
+import { initPalette } from "./palette.js?v=04fcb43574";
+import { initChart } from "./chart.js?v=efe2bab8db";
+import { initStacker } from "./stacker.js?v=ce1bcddd9b";
 
 const $ = (id) => document.getElementById(id);
 const editor = $("editor");
@@ -350,7 +351,7 @@ function buildExamples() {
   }
 }
 
-await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=b9ce97e75e", import.meta.url) });
+await init({ module_or_path: new URL("./pkg/ttime_wasm_bg.wasm?v=097e8b0fea", import.meta.url) });
 $("build").textContent = version();
 session = new Session(false, false);
 session.set_dead_keys(true);
@@ -385,6 +386,28 @@ initChart({
     insertAtCaret(text);
     setStatus(`Inserted ${label}`);
   },
+  focusEditor: () => editor.focus(),
+});
+initStacker({
+  ids: {
+    tab: "tab-stacker", panel: "panel-stacker", key: "st-key", layers: "st-layers", "layers-empty": "st-layers-empty",
+    presets: "st-presets", result: "st-result", preview: "st-preview", shortest: "st-shortest", same: "st-same",
+    canonical: "st-canonical", codepoints: "st-cp", insert: "st-insert", copy: "st-copy", copycode: "st-copycode",
+    clear: "st-clear", learn: "st-learn", diag: "st-diag", vowels: "st-vowels", marks: "st-marks", grid: "st-grid",
+  },
+  insert: (text, code) => {
+    insertAtCaret(text);
+    setStatus(`Inserted ${code}`);
+  },
+  copy: async (text, what) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus(`Copied ${what}`);
+    } catch {
+      setStatus("Clipboard blocked: use Insert instead");
+    }
+  },
+  getPrecomposed: () => session.precomposed(),
   focusEditor: () => editor.focus(),
 });
 showModes();

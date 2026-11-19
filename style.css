@@ -350,3 +350,95 @@ kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 4px; backg
 @media (max-width: 40rem) { .chart-row { grid-template-columns: 1fr; gap: 0; } }
 .chart-notes { margin: var(--s3) 0 0; }
 .chart-notes summary { cursor: pointer; font-weight: 600; }
+
+/* ---------- Stacker ---------- */
+.stacker-top input[type="text"] {
+  display: block; width: 100%; max-width: 22rem; min-height: 40px; margin: var(--s1) 0 var(--s3); padding: 0 var(--s3);
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--r);
+}
+.layers-line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin-bottom: var(--s3); }
+.layers { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.layer { display: inline-flex; align-items: center; gap: var(--s2); padding: var(--s1) var(--s2) var(--s1) var(--s3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.layer .tib { font-size: 1.5rem; line-height: 1.5; }
+.layer button { min-height: 28px; min-width: 28px; padding: 0; }
+.stacker-result { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: var(--s4) var(--s5); align-items: start; padding: var(--s4); margin: var(--s3) 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.stacker-result[hidden] { display: none; }
+.st-glyph { font-size: 4.5rem; line-height: 1.7; text-align: center; min-height: 7rem; }
+.stacker-result > :nth-child(n+3) { grid-column: 1 / -1; }
+.stacker-result dl.facts { margin: 0; }
+.st-h { margin: var(--s4) 0 var(--s2); font-size: 1rem; }
+.st-marks { margin-top: var(--s2); }
+.chip .tib { font-size: 1.25rem; line-height: 1.4; }
+.chip { flex-direction: row; align-items: center; gap: var(--s2); }
+.chart-row[hidden], .cell[hidden] { display: none; }
+@media (max-width: 40rem) { .stacker-result { grid-template-columns: 1fr; } }
+
+/* ---------- Stacker: pink and bubbly ----------
+   The panel has its own colour tokens, so everything inside picks up the pink,
+   in light and dark mode alike (pink is the brand here, as on the Mac toolbar).
+   The illustration's background is the same flat pink (#fce7e9), so it melts
+   into the panel. Text is deep berry on pink: 9:1 or better. */
+.stacker-panel {
+  --bg: #fce7e9; --surface: #fff6f7; --surface-2: #f9d5dd; --text: #5b1f35; --muted: #86445b;
+  --line: #efaabd; --line-soft: #f5c6d2; --coral: #c42b66; --accent: #c42b66; --accent-ink: #ffffff;
+  --turquoise: #c42b66; --turquoise-ink: #a8244f; --warn-bg: #ffe2d3; --focus: #c42b66;
+  color-scheme: light; color: var(--text);
+  position: relative; margin-top: var(--s5); padding: var(--s5);
+  background: var(--bg); border: 3px solid var(--line-soft); border-radius: 32px;
+  box-shadow: 0 6px 0 var(--line-soft);
+}
+/* Two bubbles hanging off the corners. Decorative; they never cover content. */
+.stacker-panel::before, .stacker-panel::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 30% 26%, #fff 0 11%, rgba(255,255,255,0.6) 12% 28%, rgba(255,176,200,0.28) 60%, rgba(255,140,180,0.5) 100%);
+  border: 2px solid rgba(255,255,255,0.8);
+}
+.stacker-panel::before { width: 3.6rem; height: 3.6rem; top: -1.6rem; right: 2.2rem; }
+.stacker-panel::after { width: 2.4rem; height: 2.4rem; bottom: -1rem; left: 1.2rem; }
+
+/* The result card stacks its parts so codes do not wrap. */
+.stacker-panel .stacker-result { grid-template-columns: 1fr; }
+.stacker-panel .stacker-result dl.facts { grid-template-columns: 1fr; gap: 0; }
+.stacker-panel .stacker-result dl.facts dt { margin-top: var(--s2); }
+.stacker-panel .stacker-result code { overflow-wrap: anywhere; }
+.stacker-panel .st-glyph { justify-self: center; min-width: 9rem; padding: 0 var(--s4); }
+
+.stacker-panel button {
+  border: 2px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text);
+  font-weight: 600; min-height: 38px; box-shadow: 0 3px 0 var(--line);
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+}
+.stacker-panel button:hover { border-color: var(--accent); transform: translateY(-1px); }
+.stacker-panel button:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+.stacker-panel button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 var(--line); }
+.stacker-panel button.primary {
+  background: linear-gradient(#e24a85, #c42b66); border-color: #a3204f; color: #fff;
+  box-shadow: 0 3px 0 #8f1c45, inset 0 2px 0 rgba(255,255,255,0.35);
+}
+.stacker-panel button.primary:active { box-shadow: 0 1px 0 #8f1c45, inset 0 2px 0 rgba(255,255,255,0.35); }
+.stacker-panel button.quiet { background: transparent; border-color: transparent; box-shadow: none; color: var(--muted); }
+.stacker-panel button.quiet:hover { color: var(--text); border-color: var(--line); }
+.stacker-panel .cell {
+  border-radius: 22px; border: 2px solid var(--line); box-shadow: 0 4px 0 var(--line);
+  background: radial-gradient(circle at 30% 22%, #ffffff 0, var(--surface) 42%, var(--surface-2) 100%);
+}
+.stacker-panel .cell:hover, .stacker-panel .cell:focus-visible { transform: translateY(-2px) scale(1.04); background: #fff; }
+.stacker-panel .cell:disabled { background: var(--surface-2); }
+.stacker-panel .chip { border-radius: 999px; padding: var(--s1) var(--s3); }
+.stacker-panel .chip[aria-pressed="true"] { background: var(--accent); border-color: #a3204f; color: var(--accent-ink); box-shadow: 0 3px 0 #8f1c45; }
+.stacker-panel .stacker-top input[type="text"] { border: 2px solid var(--line); border-radius: 999px; background: var(--surface); padding: 0 var(--s4); }
+.stacker-panel .layer { border: 2px solid var(--line); border-radius: 999px; }
+.stacker-panel .stacker-result { border: 3px solid var(--line); border-radius: 28px; background: var(--surface); box-shadow: 0 5px 0 var(--line-soft); }
+.stacker-panel .st-glyph {
+  border-radius: 40px; background: radial-gradient(circle at 30% 24%, #fff 0, #ffeef2 55%, #ffd0dd 100%);
+  align-self: center;
+}
+.stacker-panel .diag li { border-radius: 16px; border-left-width: 0; }
+.stacker-panel .st-h { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--accent); }
+.stacker-panel kbd { background: var(--surface); border-color: var(--line); border-radius: 8px; }
+.stacker-panel .chart-row { border-top: 2px dotted var(--line); }
+/* The tab that leads to it is pink too. */
+#tab-stacker { color: #c42b66; font-weight: 600; }
+#tab-stacker[aria-selected="true"] { background: #fce7e9; border-color: #f5c6d2; color: #5b1f35; }
+@media (prefers-color-scheme: dark) { #tab-stacker:not([aria-selected="true"]) { color: #ff9fc0; } }
+

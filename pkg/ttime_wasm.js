@@ -183,6 +183,45 @@ export class Session {
 if (Symbol.dispose) Session.prototype[Symbol.dispose] = Session.prototype.free;
 
 /**
+ * Builds one stack. `layers` are consonant keys joined by spaces, top to
+ * bottom (`"k Sh"`); `vowel` is a key or empty; `marks` are keys joined by
+ * spaces. Returns `{"ok":true,"text","canonical","shortest","codePoints",
+ * "diagnostics"}` or `{"ok":false,"error":"..."}` as JSON.
+ * @param {string} layers
+ * @param {string} vowel
+ * @param {string} marks
+ * @param {boolean} precomposed
+ * @returns {string}
+ */
+export function build_stack_json(layers, vowel, marks, precomposed) {
+    let deferred5_0;
+    let deferred5_1;
+    try {
+        const val4 = +precomposed;
+        let ptr0, len0, ptr1, len1, ptr2, len2;
+        try {
+            ptr0 = passStringToWasm0(layers, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            len0 = WASM_VECTOR_LEN;
+            ptr1 = passStringToWasm0(vowel, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            len1 = WASM_VECTOR_LEN;
+            ptr2 = passStringToWasm0(marks, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            len2 = WASM_VECTOR_LEN;
+        } catch (e) {
+            if (ptr2) { wasm.__wbindgen_free(ptr2, len2 * 1, 1); }
+            if (ptr1) { wasm.__wbindgen_free(ptr1, len1 * 1, 1); }
+            if (ptr0) { wasm.__wbindgen_free(ptr0, len0 * 1, 1); }
+            throw e;
+        }
+        const ret = wasm.build_stack_json(ptr0, len0, ptr1, len1, ptr2, len2, val4);
+        deferred5_0 = ret[0];
+        deferred5_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred5_0, deferred5_1, 1);
+    }
+}
+
+/**
  * Whole-string conversion: `{"text": ..., "diagnostics": [...]}` as JSON.
  * @param {string} input
  * @param {boolean} precomposed
@@ -267,6 +306,24 @@ export function search_symbols_json(query) {
         return getStringFromWasm0(ret[0], ret[1]);
     } finally {
         wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * Every letter, vowel and mark the stack builder accepts, with an example of
+ * how each looks: `{"consonants":[{"key","example"}],"subjoinedOnly":[...],"vowels":[...],"marks":[...]}`.
+ * @returns {string}
+ */
+export function stack_alphabet_json() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.stack_alphabet_json();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
     }
 }
 

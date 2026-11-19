@@ -1,4 +1,4 @@
-import { convert_json } from "./pkg/ttime_wasm.js?v=e360af5557";
+import { convert_json } from "./pkg/ttime_wasm.js?v=7787aafc88";
 
 // The stacking chart. Every glyph is made by the engine from the EWTS shown
 // under it, so the chart cannot disagree with typing. `insert(text, label)` puts
